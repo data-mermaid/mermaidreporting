@@ -1,0 +1,46 @@
+Package: mermaidreporting
+Title: Reporting on MERMAID Data
+Version: 0.0.1.9001
+Authors@R: 
+    c(person(given = "Sharla",
+             family = "Gelfand",
+             role = c("aut", "cre"),
+             email = "sharla.gelfand@gmail.com"),
+      person(given = "Wildlife Conservation Society",
+             role = c("cph", "fnd")))
+Description: Utility functions for summarising and visualizing
+    MERMAID data.
+License: MIT + file LICENSE
+Depends: 
+    R (>= 2.10),
+    mermaidr (>= 0.0.1)
+Imports: 
+    dplyr,
+    janitor,
+    magrittr,
+    scales,
+    tibble,
+    tidyr (>= 1.0.0),
+    rnaturalearth,
+    sf,
+    tmap,
+    ggplot2,
+    snakecase (>= 0.11.0),
+    rlang,
+    methods,
+    leaflet,
+    ggrepel,
+    ggspatial,
+    stringr,
+    rnaturalearthhires,
+    forcats
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
+Suggests: 
+    testthat (>= 2.1.0),
+    proto,
+    mapview
+Remotes: 
+    ropensci/rnaturalearthhires
+    data-mermaid/mermaidr
