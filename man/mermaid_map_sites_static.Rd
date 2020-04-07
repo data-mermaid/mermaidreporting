@@ -4,13 +4,24 @@
 \alias{mermaid_map_sites_static}
 \title{Create a static map of MERMAID sample events sites}
 \usage{
-mermaid_map_sites_static(.data, plot_var = NULL, jitter = 0.01,
-  size = 2, colour = "red", alpha = 0.5, label_sites = FALSE,
-  label_axes = TRUE, scale = FALSE, scale_position = c("bottomright",
-  "bottomleft", "topright", "topleft"), arrow = FALSE,
+mermaid_map_sites_static(
+  .data,
+  plot_var = NULL,
+  jitter = 0.01,
+  size = 2,
+  colour = "red",
+  alpha = 0.5,
+  label_sites = FALSE,
+  label_axes = TRUE,
+  scale = FALSE,
+  scale_position = c("bottomright", "bottomleft", "topright", "topleft"),
+  arrow = FALSE,
   arrow_position = c("bottomright", "bottomleft", "topright", "topleft"),
-  legend = TRUE, legend_position = c("right", "left", "top", "bottom"),
-  latitude_bounds = NULL, longitude_bounds = NULL)
+  legend = TRUE,
+  legend_position = c("right", "left", "top", "bottom"),
+  latitude_bounds = NULL,
+  longitude_bounds = NULL
+)
 }
 \arguments{
 \item{.data}{Data frame with latitude and longitude of sample events sites.}
