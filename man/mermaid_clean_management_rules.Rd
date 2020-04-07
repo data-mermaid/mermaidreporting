@@ -24,5 +24,22 @@ mermaid_clean_management_rules(
 
 }
 \description{
-Clean up MERMAID management rules. Recodes any (or multiple of) Period Closure, Size Limits, Gear Restrictions, and Species Restrictions to "Partial Restrictions". Other rules are converted to title case (e.g. no take to "No Take") if they aren't already. Empty strings ("") are converted to NAs.
+Clean up MERMAID management rules. Recodes any (or multiple of, and values are case insensitive) Period Closure, Size Limits, Gear Restrictions, and Species Restrictions to "Partial Restrictions". Other rules are converted to title case (e.g. no take to "No Take") if they aren't already. Empty strings ("") are converted to NAs.
+}
+\examples{
+library(mermaidr)
+sample_events <- mermaid_search_projects(name = "Aceh Jaya Coastal Park") \%>\%
+  mermaid_get_project_endpoint(endpoint = "beltfishes/sampleevents", limit = 5)
+
+unique(sample_events[["management_rules"]])
+# [1] "gear restriction; size limits; species restriction"
+# [2] "open access"
+# [3] "no take"
+
+sample_events_clean <- sample_events \%>\%
+  mermaid_clean_management_rules(management_rules, .name = "Management Rules")
+
+unique(sample_events_clean[["Management Rules"]])
+# [1] "Partial Restrictions" "Open Access"
+# [3] "No Take"
 }
