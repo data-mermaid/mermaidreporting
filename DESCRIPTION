@@ -42,5 +42,5 @@ Suggests:
     proto,
     mapview
 Remotes: 
-    ropensci/rnaturalearthhires
+    ropensci/rnaturalearthhires,
     data-mermaid/mermaidr
