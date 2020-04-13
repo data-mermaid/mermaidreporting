@@ -1,28 +1,26 @@
 #' MERMAID boxplots
 #'
-#' @param .data Sample event data containing mean fish belt biomass, with variables indicated in \code{.group_var} and \code{.compare_var}
-#' @param .group_var Variable to group by, e.g. \code{biomass_kgha_by_trophic_group_avg}
+#' @param .data Sample event data containing mean fish belt biomass, with variables indicated in \code{.group_var} and \code{.compare_var}. Likely the output from a \code{mermaid_get_project_endpoint()} call.
+#' @param .group_var Variable to group by, e.g. \code{biomass_kgha_by_trophic_group_avg}. Must be a data frame column.
 #' @param .compare_var Variable to compare by, e.g. \code{management_rules}
 #' @param .clean_values Whether to clean the values in \code{.group_var} and \code{.compare_var} (with title case as default - see \code{.clean_values_case}), in case they are not clean (e.g. contain dashes, underscores, are lowercase, etc). Defaults to TRUE.
 #' @param .clean_values_case The desired clean values case (default is "title"). For example, if a value is "invertivore-mobile", title case converts it to "Invertivore Mobile" while sentence case converts it to "Invertivore mobile". If you don't want to replace dashes with spaces (e.g. get "Interivore-Mobile", set \code{.replace_dashes = FALSE}.
 #' @param .replace_dashes Whether to also remove dashes from values when cleaning them. Defaults to TRUE.
 mermaid_boxplot <- function(.data, .group_var, group_var_string, .compare_var, compare_var_string, y_axis_name, .clean_values = TRUE, .clean_values_case = c("title", "sentence"), .replace_dashes = TRUE) {
 
+  check_df_col(.data, group_var_string)
   check_data(.data, group_var_string, compare_var_string)
 
-  .data <- .data %>%
-    tidyr::unpack(!!.group_var, names_sep = "_") %>%
-    tidyr::pivot_longer(
-      cols = dplyr::contains(paste0(group_var_string, "_")),
-      names_to = "group",
-      names_prefix = paste0(group_var_string, "_"),
-      values_to = "value"
-    ) %>%
-    tidyr::drop_na(value) %>%
-    dplyr::mutate(
-      group = forcats::fct_expand(group, "other"),
-      group = forcats::fct_relevel(group, "other", after = Inf)
-    )
+      .data <- .data %>%
+      tidyr::unpack(!!.group_var, names_sep = "_") %>%
+      tidyr::pivot_longer(
+        cols = dplyr::contains(paste0(group_var_string, "_")),
+        names_to = "group",
+        names_prefix = paste0(group_var_string, "_"),
+        values_to = "value"
+      ) %>%
+      tidyr::drop_na(value)
+
 
   if (.clean_values) {
     if (.clean_values_case == "title") {
@@ -46,6 +44,12 @@ mermaid_boxplot <- function(.data, .group_var, group_var_string, .compare_var, c
     ggplot2::scale_x_discrete(snakecase::to_title_case(compare_var_string)) +
     ggplot2::theme_minimal() +
     ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))
+}
+
+check_df_col <- function(.data, .col_string) {
+  if(!inherits(.data[[.col_string]], "data.frame")) {
+    stop("Column `", .col_string, "` must be a data frame column (the raw output from a `mermaid_get_project_endpoint()` function).\nIf you ran `mermaid_clean_columns()` on the data, use the data *before* that cleaning to plot instead.", call. = FALSE)
+  }
 }
 
 #' Plot MERMAID fish belt biomass
