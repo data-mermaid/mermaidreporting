@@ -7,6 +7,7 @@
 mermaid_map_sites_static(
   .data,
   plot_var = NULL,
+  use_fiji_crs = FALSE,
   jitter = 0.01,
   size = 2,
   colour = "red",
@@ -27,6 +28,8 @@ mermaid_map_sites_static(
 \item{.data}{Data frame with latitude and longitude of sample events sites.}
 
 \item{plot_var}{Variable to plot by (optional).}
+
+\item{use_fiji_crs}{Whether to use a coordinate reference system appropriate for mapping Fiji data. Defaults to FALSE.}
 
 \item{jitter}{Amount of jittering applied to points. Defaults to 0.01. Set to 0 to remove jittering.}
 

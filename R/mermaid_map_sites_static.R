@@ -4,6 +4,7 @@
 #'
 #' @param .data Data frame with latitude and longitude of sample events sites.
 #' @param plot_var Variable to plot by (optional).
+#' @param use_fiji_crs Whether to use a coordinate reference system appropriate for mapping Fiji data. Defaults to FALSE.
 #' @param jitter Amount of jittering applied to points. Defaults to 0.01. Set to 0 to remove jittering.
 #' @param size Size of points (when \code{plot_var} is not a numeric variable). Defaults to 2.
 #' @param colour Colour of points (when \code{plot_var} is not a character, factor, or logical variable). Defaults to red.
@@ -64,7 +65,7 @@
 #' library(ggplot2)
 #' mermaid_map_sites_static(sample_events, biomass_kgha_avg) +
 #'   labs(title = "Sites by mean total biomass")
-mermaid_map_sites_static <- function(.data, plot_var = NULL, jitter = 0.01, size = 2, colour = "red", alpha = 0.5,
+mermaid_map_sites_static <- function(.data, plot_var = NULL, use_fiji_crs = FALSE, jitter = 0.01, size = 2, colour = "red", alpha = 0.5,
                              label_sites = FALSE, label_axes = TRUE,
                              scale = FALSE, scale_position = c("bottomright", "bottomleft", "topright", "topleft"),
                              arrow = FALSE, arrow_position = c("bottomright", "bottomleft", "topright", "topleft"),
@@ -89,7 +90,7 @@ mermaid_map_sites_static <- function(.data, plot_var = NULL, jitter = 0.01, size
 
   .data <- as.data.frame(.data)
   data_sf <- sf::st_as_sf(.data, coords = c("longitude", "latitude"), crs = 4326)
-  use_fiji_crs <- longitude_bounds[[1]] <= 180 & longitude_bounds[[2]] >= 180
+
   if (use_fiji_crs) {
     data_sf <- sf::st_transform(data_sf, crs = 3460)
   }
