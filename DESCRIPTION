@@ -1,6 +1,6 @@
 Package: mermaidreporting
 Title: Reporting on MERMAID Data
-Version: 0.0.1.9001
+Version: 0.0.1.90012
 Authors@R: 
     c(person(given = "Sharla",
              family = "Gelfand",
