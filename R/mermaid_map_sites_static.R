@@ -23,6 +23,7 @@
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' library(mermaidr)
 #' sample_events <- mermaid_search_projects(name = "XPDC Kei Kecil 2018") %>%
 #'   mermaid_get_project_data("fishbelt", "sampleevents", limit = 25)
@@ -65,6 +66,7 @@
 #' library(ggplot2)
 #' mermaid_map_sites_static(sample_events, biomass_kgha_avg) +
 #'   labs(title = "Sites by mean total biomass")
+#' }
 mermaid_map_sites_static <- function(.data, plot_var = NULL, use_fiji_crs = FALSE, jitter = 0.01, size = 2, colour = "red", alpha = 0.5,
                              label_sites = FALSE, label_axes = TRUE,
                              scale = FALSE, scale_position = c("bottomright", "bottomleft", "topright", "topleft"),
@@ -191,11 +193,13 @@ mermaid_map_sites_static <- function(.data, plot_var = NULL, use_fiji_crs = FALS
 #' @return A list of length two containing the longitude and latitude bounds of a map.
 #' @export
 #' @examples
+#' \donttest{
 #' library(mermaidr)
 #' sample_events <- mermaid_search_projects(name = "XPDC Kei Kecil 2018") %>%
-#'   mermaid_get_project_endpoint(endpoint = "beltfishes/sampleevents", limit = 25)
+#'   mermaid_get_project_data("fishbelt", "sampleevents", limit = 25)
 #' p <- mermaid_map_sites_static(sample_events)
 #' mermaid_static_map_bounds(p)
+#' }
 mermaid_static_map_bounds <- function(map) {
   check_if_static_map(map)
   attr(map, "bounds")

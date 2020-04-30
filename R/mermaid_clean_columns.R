@@ -10,6 +10,7 @@
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' library(mermaidr)
 #' units <- mermaid_get_my_projects() %>%
 #'   mermaid_get_project_data("fishbelt", "sampleunits", limit = 1)
@@ -78,6 +79,7 @@
 #' # [38] "management_notes"
 #' # [39] "id"
 #' # [40] "contact_link"
+#' }
 mermaid_clean_columns <- function(.data, .append_column_prefix = FALSE, .clean_names = TRUE, .clean_names_case = c("snake", "sentence", "title", "lower_camel", "upper_camel")) {
   .clean_names_case <- match.arg(.clean_names_case)
 

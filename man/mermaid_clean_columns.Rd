@@ -24,6 +24,7 @@ mermaid_clean_columns(
 Expands data-frame columns (df-cols) that come from \code{mermaidr}. Optionally cleans the column names.
 }
 \examples{
+\donttest{
 library(mermaidr)
 units <- mermaid_get_my_projects() \%>\%
   mermaid_get_project_data("fishbelt", "sampleunits", limit = 1)
@@ -92,4 +93,5 @@ names(units_expanded)
 # [38] "management_notes"
 # [39] "id"
 # [40] "contact_link"
+}
 }

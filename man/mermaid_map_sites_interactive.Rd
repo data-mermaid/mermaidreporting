@@ -45,6 +45,7 @@ mermaid_map_sites_interactive(
 Create a static map of sites, zoomed in to the sample events sites. If \code{plot_var} is supplied, then the colour of the site points are based on \code{plot_var}. The map returned is a \code{leaflet} plot, and so \code{leaflet} layers can be built upon it for further customization - please see the examples section.
 }
 \examples{
+\donttest{
 library(mermaidr)
 sample_events <- mermaid_search_projects(name = "XPDC Kei Kecil 2018") \%>\%
   mermaid_get_project_data("fishbelt", "sampleevents")
@@ -76,7 +77,6 @@ mermaid_map_sites_interactive(sample_events) \%>\%
   leaflet::addMiniMap()
 
 # You can also save a static image of the map using the mapview package:
-\donttest{
 library(mapview)
 m <- mermaid_map_sites_interactive(sample_events, reef_exposure, legend_position = "topright")
 mapshot(m, file = "sites_by_management_rule.png")

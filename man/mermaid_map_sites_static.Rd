@@ -63,6 +63,7 @@ mermaid_map_sites_static(
 Create a static map of sample events sites, zoomed in to the site locations. If \code{plot_var} is supplied, then the site points are based on \code{plot_var} - if it is a numeric variable, the sizes of the points vary with the sizes of the variable. If it is a character, factor, or logical variable, then the colours of the points vary with the different values of the variable. The map returned is a \code{ggplot2} plot, and so \code{ggplot2} layers can be built upon it for further customization - please see the examples section.
 }
 \examples{
+\donttest{
 library(mermaidr)
 sample_events <- mermaid_search_projects(name = "XPDC Kei Kecil 2018") \%>\%
   mermaid_get_project_data("fishbelt", "sampleevents", limit = 25)
@@ -105,4 +106,5 @@ mermaid_map_sites_static(sample_events,
 library(ggplot2)
 mermaid_map_sites_static(sample_events, biomass_kgha_avg) +
   labs(title = "Sites by mean total biomass")
+}
 }

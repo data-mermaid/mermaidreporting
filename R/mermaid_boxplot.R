@@ -63,12 +63,14 @@ check_df_col <- function(.data, .col_string) {
 #' @param .group_var Variable to group by, e.g. \code{biomass_kgha_by_trophic_group_avg}
 #' @export
 #' @examples
+#' \donttest{
 #' library(mermaidr)
 #' events <- mermaid_search_projects(name = "XPDC Kei Kecil 2018") %>%
 #'   mermaid_get_project_data("fishbelt", "sampleevents")
 #'
 #' events %>%
 #'   mermaid_plot_fish_belt_biomass(biomass_kgha_by_trophic_group_avg, reef_exposure)
+#' }
 mermaid_plot_fish_belt_biomass <- function(.data, .group_var, .compare_var, .clean_values = TRUE, .clean_values_case = c("title", "sentence"), .replace_dashes = TRUE) {
   .group_var <- rlang::enquo(.group_var)
   group_var_string <- rlang::quo_name(.group_var)

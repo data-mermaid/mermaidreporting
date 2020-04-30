@@ -30,10 +30,12 @@ mermaid_plot_fish_belt_biomass(
 Plot box plots of fish belt biomass by a grouping variable \code{.group_var} (e.g. trophic group), separated by a supplied \code{.compare_var}.
 }
 \examples{
+\donttest{
 library(mermaidr)
 events <- mermaid_search_projects(name = "XPDC Kei Kecil 2018") \%>\%
   mermaid_get_project_data("fishbelt", "sampleevents")
 
 events \%>\%
   mermaid_plot_fish_belt_biomass(biomass_kgha_by_trophic_group_avg, reef_exposure)
+}
 }

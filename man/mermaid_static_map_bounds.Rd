@@ -16,9 +16,11 @@ A list of length two containing the longitude and latitude bounds of a map.
 Get latitude and longitude bounds from a static map
 }
 \examples{
+\donttest{
 library(mermaidr)
 sample_events <- mermaid_search_projects(name = "XPDC Kei Kecil 2018") \%>\%
-  mermaid_get_project_endpoint(endpoint = "beltfishes/sampleevents", limit = 25)
+  mermaid_get_project_data("fishbelt", "sampleevents", limit = 25)
 p <- mermaid_map_sites_static(sample_events)
 mermaid_static_map_bounds(p)
+}
 }
