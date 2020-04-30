@@ -70,17 +70,13 @@ mermaid_map_sites_static <- function(.data, plot_var = NULL, use_fiji_crs = FALS
                              scale = FALSE, scale_position = c("bottomright", "bottomleft", "topright", "topleft"),
                              arrow = FALSE, arrow_position = c("bottomright", "bottomleft", "topright", "topleft"),
                              legend = TRUE, legend_position = c("right", "left", "top", "bottom"),
-                             latitude_bounds = NULL, longitude_bounds = NULL) {
+                             latitude_bounds = NULL, longitude_bounds = NULL, bb_ext = 1) {
 
   # Check inputs
 
   ## Latitude and longitude
   if (!is.null(latitude_bounds) && !is.null(longitude_bounds)) {
     check_lat_long_bounds(latitude_bounds, longitude_bounds, .data[, c("longitude", "latitude")])
-  } else {
-    zoom_bounds <- optimal_zoom(.data[, c("longitude", "latitude")])
-    longitude_bounds <- zoom_bounds[["longitude_bounds"]]
-    latitude_bounds <- zoom_bounds[["latitude_bounds"]]
   }
 
   # Scale, arrow, legend positions
@@ -91,15 +87,20 @@ mermaid_map_sites_static <- function(.data, plot_var = NULL, use_fiji_crs = FALS
   .data <- as.data.frame(.data)
   data_sf <- sf::st_as_sf(.data, coords = c("longitude", "latitude"), crs = 4326)
 
+  worldmap <- rnaturalearth::ne_countries(scale = "large", returnclass = "sf")
+
   if (use_fiji_crs) {
     data_sf <- sf::st_transform(data_sf, crs = 3460)
+    worldmap <- sf::st_transform(worldmap, crs = 3460)
   }
 
-  # Initial plot
-  worldmap <- rnaturalearth::ne_countries(scale = "large", returnclass = "sf")
-  worldmap <- suppressMessages(suppressWarnings(sf::st_crop(worldmap, xmin = longitude_bounds[[1]], xmax = longitude_bounds[[2]], ymin = latitude_bounds[[1]], ymax = latitude_bounds[[2]], crs = ifelse(use_fiji_crs, 3460, 4326))))
+  ## Create bounding box
+  if (is.null(latitude_bounds) && is.null(longitude_bounds)) {
+    .data_bb <- tmaptools::bb(data_sf, ext = 1.1)
 
-  p <- ggplot2::ggplot(data = worldmap) +
+  }
+
+  p <- ggplot2::ggplot(data = sf::st_crop(worldmap, tmaptools::bb(data_sf, ext = 1.2))) +
     ggplot2::geom_sf(fill = "antiquewhite1") +
     ggplot2::theme_minimal()
 
@@ -166,15 +167,13 @@ mermaid_map_sites_static <- function(.data, plot_var = NULL, use_fiji_crs = FALS
       ggplot2::theme(legend.position = "none")
   }
 
-  # Latitude and longitude bounds
-  p <- p +
-    ggplot2::coord_sf(xlim = longitude_bounds, ylim = latitude_bounds, expand = FALSE)
-
+  # Theme and limits
   p <- p +
     ggplot2::theme(
       panel.background = ggplot2::element_rect(fill = "aliceblue"),
       panel.grid.major = ggplot2::element_line(colour = "transparent")
-    )
+    ) +
+    ggplot2::coord_sf(xlim = .data_bb[c("xmin", "xmax")], ylim = .data_bb[c("ymin", "ymax")], expand = FALSE)
 
   attr(p, "bounds") <- list(
     latitude_bounds = latitude_bounds,
