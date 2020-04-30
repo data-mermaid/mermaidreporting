@@ -14,7 +14,7 @@
 #' @examples
 #' library(mermaidr)
 #' sample_events <- mermaid_search_projects(name = "Aceh Jaya Coastal Park") %>%
-#'   mermaid_get_project_endpoint(endpoint = "beltfishes/sampleevents", limit = 5)
+#'   mermaid_get_project_data("fishbelt", "sampleevents")
 #'
 #' unique(sample_events[["management_rules"]])
 #' # [1] "gear restriction; size limits; species restriction"
@@ -22,9 +22,9 @@
 #' # [3] "no take"
 #'
 #' sample_events_clean <- sample_events %>%
-#'   mermaid_clean_management_rules(management_rules, .name = "Management Rules")
+#'   mermaid_clean_management_rules()
 #'
-#' unique(sample_events_clean[["Management Rules"]])
+#' unique(sample_events_clean[["management_rules"]])
 #' # [1] "Partial Restrictions" "Open Access"
 #' # [3] "No Take"
 mermaid_clean_management_rules <- function(.data, .management_rules = management_rules, .name = NA, .remove = !is.na(.name), .missing_value = NA_character_) {

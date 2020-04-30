@@ -25,7 +25,7 @@
 #' @examples
 #' library(mermaidr)
 #' sample_events <- mermaid_search_projects(name = "XPDC Kei Kecil 2018") %>%
-#'   mermaid_get_project_endpoint(endpoint = "beltfishes/sampleevents", limit = 25)
+#'   mermaid_get_project_data("fishbelt", "sampleevents", limit = 25)
 #'
 #' # Default map
 #' mermaid_map_sites_static(sample_events)
@@ -126,7 +126,7 @@ mermaid_map_sites_static <- function(.data, plot_var = NULL, use_fiji_crs = FALS
   # Site labels
   if (label_sites) {
     p <- p +
-      ggrepel::geom_text_repel(data = .data, ggplot2::aes_string(x = "longitude", y = "latitude", label = "site_name"))
+      ggrepel::geom_text_repel(data = .data, ggplot2::aes_string(x = "longitude", y = "latitude", label = "site"))
   }
 
   # Scale bar

@@ -11,8 +11,8 @@
 #'
 #' @examples
 #' library(mermaidr)
-#' units <- mermaid_list_my_projects() %>%
-#'   mermaid_get_project_endpoint(endpoint = "beltfishes/sampleunits", limit = 1)
+#' units <- mermaid_get_my_projects() %>%
+#'   mermaid_get_project_data("fishbelt", "sampleunits", limit = 1)
 #'
 #' names(units)
 #' # [1] "project"                       "tags"
@@ -65,13 +65,13 @@
 #' # [25] "transect_length"
 #' # [26] "transect_width"
 #' # [27] "biomass_kgha"
-#' # [28] "biomass_kgha_by_trophic_group_omnivore"
-#' # [29] "biomass_kgha_by_trophic_group_piscivore"
-#' # [30] "biomass_kgha_by_trophic_group_invertivore_mobile"
-#' # [31] "biomass_kgha_by_trophic_group_invertivore_sessile"
-#' # [32] "biomass_kgha_by_trophic_group_herbivore_detritivore"
-#' # [33] "biomass_kgha_by_trophic_group_planktivore"
-#' # [34] "biomass_kgha_by_trophic_group_herbivore_macroalgae"
+#' # [28] "omnivore"
+#' # [29] "piscivore"
+#' # [30] "invertivore_mobile"
+#' # [31] "invertivore_sessile"
+#' # [32] "herbivore_detritivore"
+#' # [33] "planktivore"
+#' # [34] "herbivore_macroalgae"
 #' # [35] "data_policy_beltfish"
 #' # [36] "project_notes"
 #' # [37] "site_notes"

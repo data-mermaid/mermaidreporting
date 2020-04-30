@@ -21,7 +21,13 @@ mermaid_boxplot(
 
 \item{.group_var}{Variable to group by, e.g. \code{biomass_kgha_by_trophic_group_avg}. Must be a data frame column.}
 
+\item{group_var_string}{String version of \code{.group_var}. Internal use only.}
+
 \item{.compare_var}{Variable to compare by, e.g. \code{management_rules}}
+
+\item{compare_var_string}{String version of \code{.compare_var}. Internal use only.}
+
+\item{y_axis_name}{Name of the y axis. Internal use only.}
 
 \item{.clean_values}{Whether to clean the values in \code{.group_var} and \code{.compare_var} (with title case as default - see \code{.clean_values_case}), in case they are not clean (e.g. contain dashes, underscores, are lowercase, etc). Defaults to TRUE.}
 

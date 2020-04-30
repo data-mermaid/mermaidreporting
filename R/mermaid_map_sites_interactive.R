@@ -19,7 +19,7 @@
 #' @examples
 #' library(mermaidr)
 #' sample_events <- mermaid_search_projects(name = "XPDC Kei Kecil 2018") %>%
-#'   mermaid_get_project_endpoint(endpoint = "beltfishes/sampleevents", limit = 25)
+#'   mermaid_get_project_data("fishbelt", "sampleevents")
 #'
 #' # Default map
 #' mermaid_map_sites_interactive(sample_events)
@@ -48,7 +48,7 @@
 #'   leaflet::addMiniMap()
 #'
 #' # You can also save a static image of the map using the mapview package:
-#' \dontrun{
+#' \donttest{
 #' library(mapview)
 #' m <- mermaid_map_sites_interactive(sample_events, reef_exposure, legend_position = "topright")
 #' mapshot(m, file = "sites_by_management_rule.png")

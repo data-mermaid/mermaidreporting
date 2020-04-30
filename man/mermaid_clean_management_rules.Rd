@@ -23,16 +23,13 @@ mermaid_clean_management_rules(
 
 \item{.missing_value}{How to recode missing values. Defaults to a literal NA. Can change to a specific value, e.g. "Not Specified".}
 }
-\value{
-
-}
 \description{
 Clean up MERMAID management rules. Recodes any (or multiple of, and values are case insensitive) Period Closure, Size Limits, Gear Restrictions, and Species Restrictions to "Partial Restrictions". Other rules are converted to title case (e.g. no take to "No Take") if they aren't already. Empty strings ("") are converted to NAs.
 }
 \examples{
 library(mermaidr)
 sample_events <- mermaid_search_projects(name = "Aceh Jaya Coastal Park") \%>\%
-  mermaid_get_project_endpoint(endpoint = "beltfishes/sampleevents", limit = 5)
+  mermaid_get_project_data("fishbelt", "sampleevents")
 
 unique(sample_events[["management_rules"]])
 # [1] "gear restriction; size limits; species restriction"
@@ -40,9 +37,9 @@ unique(sample_events[["management_rules"]])
 # [3] "no take"
 
 sample_events_clean <- sample_events \%>\%
-  mermaid_clean_management_rules(management_rules, .name = "Management Rules")
+  mermaid_clean_management_rules()
 
-unique(sample_events_clean[["Management Rules"]])
+unique(sample_events_clean[["management_rules"]])
 # [1] "Partial Restrictions" "Open Access"
 # [3] "No Take"
 }

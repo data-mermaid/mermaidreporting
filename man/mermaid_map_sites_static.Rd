@@ -21,8 +21,7 @@ mermaid_map_sites_static(
   legend = TRUE,
   legend_position = c("right", "left", "top", "bottom"),
   latitude_bounds = NULL,
-  longitude_bounds = NULL,
-  bb_ext = 1
+  longitude_bounds = NULL
 )
 }
 \arguments{
@@ -66,7 +65,7 @@ Create a static map of sample events sites, zoomed in to the site locations. If 
 \examples{
 library(mermaidr)
 sample_events <- mermaid_search_projects(name = "XPDC Kei Kecil 2018") \%>\%
-  mermaid_get_project_endpoint(endpoint = "beltfishes/sampleevents", limit = 25)
+  mermaid_get_project_data("fishbelt", "sampleevents", limit = 25)
 
 # Default map
 mermaid_map_sites_static(sample_events)

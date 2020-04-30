@@ -2,7 +2,10 @@
 #'
 #' @param .data Sample event data containing mean fish belt biomass, with variables indicated in \code{.group_var} and \code{.compare_var}. Likely the output from a \code{mermaid_get_project_endpoint()} call.
 #' @param .group_var Variable to group by, e.g. \code{biomass_kgha_by_trophic_group_avg}. Must be a data frame column.
+#' @param group_var_string String version of \code{.group_var}. Internal use only.
 #' @param .compare_var Variable to compare by, e.g. \code{management_rules}
+#' @param compare_var_string String version of \code{.compare_var}. Internal use only.
+#' @param y_axis_name Name of the y axis. Internal use only.
 #' @param .clean_values Whether to clean the values in \code{.group_var} and \code{.compare_var} (with title case as default - see \code{.clean_values_case}), in case they are not clean (e.g. contain dashes, underscores, are lowercase, etc). Defaults to TRUE.
 #' @param .clean_values_case The desired clean values case (default is "title"). For example, if a value is "invertivore-mobile", title case converts it to "Invertivore Mobile" while sentence case converts it to "Invertivore mobile". If you don't want to replace dashes with spaces (e.g. get "Interivore-Mobile", set \code{.replace_dashes = FALSE}.
 #' @param .replace_dashes Whether to also remove dashes from values when cleaning them. Defaults to TRUE.
@@ -19,16 +22,16 @@ mermaid_boxplot <- function(.data, .group_var, group_var_string, .compare_var, c
         names_prefix = paste0(group_var_string, "_"),
         values_to = "value"
       ) %>%
-      tidyr::drop_na(value)
+      tidyr::drop_na(.data$value)
 
 
   if (.clean_values) {
     if (.clean_values_case == "title") {
       .data <- .data %>%
-        dplyr::mutate_at(dplyr::vars(group, !!.compare_var), stringr::str_to_title)
+        dplyr::mutate_at(dplyr::vars(.data$group, !!.compare_var), stringr::str_to_title)
     } else if (.clean_values_case == "sentence") {
       .data <- .data %>%
-        dplyr::mutate_at(dplyr::vars(group, !!.compare_var), stringr::str_to_sentence)
+        dplyr::mutate_at(dplyr::vars(.data$group, !!.compare_var), stringr::str_to_sentence)
     }
     if (.replace_dashes) {
       .data <- .data %>%
@@ -62,7 +65,7 @@ check_df_col <- function(.data, .col_string) {
 #' @examples
 #' library(mermaidr)
 #' events <- mermaid_search_projects(name = "XPDC Kei Kecil 2018") %>%
-#'   mermaid_get_project_endpoint(endpoint = "beltfishes/sampleevents")
+#'   mermaid_get_project_data("fishbelt", "sampleevents")
 #'
 #' events %>%
 #'   mermaid_plot_fish_belt_biomass(biomass_kgha_by_trophic_group_avg, reef_exposure)
