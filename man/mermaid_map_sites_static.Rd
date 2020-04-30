@@ -21,7 +21,8 @@ mermaid_map_sites_static(
   legend = TRUE,
   legend_position = c("right", "left", "top", "bottom"),
   latitude_bounds = NULL,
-  longitude_bounds = NULL
+  longitude_bounds = NULL,
+  bb_ext = 1
 )
 }
 \arguments{

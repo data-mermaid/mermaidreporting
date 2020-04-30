@@ -23,7 +23,6 @@ Imports:
     tidyr (>= 1.0.0),
     rnaturalearth,
     sf,
-    tmap,
     ggplot2,
     snakecase (>= 0.11.0),
     rlang,
@@ -45,4 +44,4 @@ Suggests:
     mapview
 Remotes: 
     ropensci/rnaturalearthhires,
-    data-mermaid/mermaidr
+    data-mermaid/mermaidr@package

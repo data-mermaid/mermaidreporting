@@ -1,22 +1,22 @@
-test_that("mermaid_clean_columns unpacks df cols, adds prefix by default", {
+test_that("mermaid_clean_columns unpacks df cols, does not add prefix by default", {
   df <- tibble::tibble(x = 1,
                        y = tibble::tibble(a = 1, b = 2))
 
   output <- mermaid_clean_columns(df)
-  expect_named(output, c("x", "y_a", "y_b"))
+  expect_named(output, c("x", "a", "b"))
 })
 
-test_that("mermaid_clean_columns doesn't add prefix if set not to", {
+test_that("mermaid_clean_columns adds prefix if to", {
   df <- tibble::tibble(x = 1,
                         y = tibble::tibble(a = 1, b = 2))
-  expect_named(mermaid_clean_columns(df, .append_column_prefix = FALSE), c("x", "a", "b"))
+  expect_named(mermaid_clean_columns(df, .append_column_prefix = TRUE), c("x", "y_a", "y_b"))
 })
 
 test_that("mermaid_clean_columns cleans names by default, doesn't if set not to", {
   df <- tibble::tibble(x = 1,
                        y = tibble::tibble(`Type One` = 1, `type-2` = 2))
-  expect_named(mermaid_clean_columns(df), c("x", "y_type_one", "y_type_2"))
-  expect_named(mermaid_clean_columns(df, .clean_names = FALSE), c("x", "y_Type One", "y_type-2"))
+  expect_named(mermaid_clean_columns(df), c("x", "type_one", "type_2"))
+  expect_named(mermaid_clean_columns(df, .clean_names = FALSE), c("x", "Type One", "type-2"))
 })
 
 test_that("mermaid_clean_columns allows different cases, errors if not in list", {

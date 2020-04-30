@@ -4,11 +4,11 @@
 #'
 #'
 #' @param .data Input data
-#' @param management_rules Column containing management rules, e.g. \code{management_rules}
-#' @param .name Name of the clean column, e.g. "Management Rules". Defaults to NA, in which case the name in \code{management_rules} is used.
-#' @param .remove Whether to remove the \code{management_rules} column (TRUE/FALSE). Only applicable if \code{.name} is set.
+#' @param .management_rules Column containing management rules. Defaults to \code{management_rules}
+#' @param .name Name of the clean column, e.g. "Management Rules". By default just replaces the column in \code{.management_rules}.
+#' @param .remove Whether to remove the \code{.management_rules} column (TRUE/FALSE). Only applicable if \code{.name} is set.
+#' @param .missing_value How to recode missing values. Defaults to a literal NA. Can change to a specific value, e.g. "Not Specified".
 #'
-#' @return
 #' @export
 #'
 #' @examples
@@ -27,28 +27,28 @@
 #' unique(sample_events_clean[["Management Rules"]])
 #' # [1] "Partial Restrictions" "Open Access"
 #' # [3] "No Take"
-mermaid_clean_management_rules <- function(.data, management_rules, .name = NA, .remove = !is.na(.name)) {
+mermaid_clean_management_rules <- function(.data, .management_rules = management_rules, .name = NA, .remove = !is.na(.name), .missing_value = NA_character_) {
 
-  validate_clean_management_rules(.data, management_rules = rlang::quo_name(rlang::enquo(management_rules)), .name, .remove)
+  validate_clean_management_rules(.data, management_rules = rlang::quo_name(rlang::enquo(.management_rules)), .name, .remove)
 
-  check_management_rules_values(values = dplyr::pull(.data, {{management_rules}}))
+  check_management_rules_values(values = dplyr::pull(.data, {{.management_rules}}))
 
   clean_rules <- .data %>%
     dplyr::mutate(clean_rules := dplyr::case_when(
-      tolower({{management_rules}}) == "no take" ~ "No Take",
-      tolower({{management_rules}}) == "open access" ~ "Open Access",
-      {{management_rules}} == "" ~ NA_character_,
+      tolower({{.management_rules}}) == "no take" ~ "No Take",
+      tolower({{.management_rules}}) == "open access" ~ "Open Access",
+      {{.management_rules}} == "" ~ .missing_value,
       grepl(
         "periodic closure|size limit|gear restriction|species restriction",
-        tolower({{ management_rules }})
+        tolower({{ .management_rules }})
       ) ~ "Partial Restrictions"
     ))
 
-    if (is.na(.name) | rlang::quo_name(rlang::enquo(management_rules)) == .name) {
+    if (is.na(.name) | rlang::quo_name(rlang::enquo(.management_rules)) == .name) {
 
       clean_rules <- clean_rules %>%
-        dplyr::select(-{{ management_rules }}) %>%
-        dplyr::rename({{ management_rules }} := clean_rules)
+        dplyr::select(-{{ .management_rules }}) %>%
+        dplyr::rename({{ .management_rules }} := clean_rules)
 
     } else {
       clean_rules <- clean_rules %>%
@@ -56,7 +56,7 @@ mermaid_clean_management_rules <- function(.data, management_rules, .name = NA, 
 
       if (.remove) {
         clean_rules <- clean_rules %>%
-          dplyr::select(-{{ management_rules }})
+          dplyr::select(-{{ .management_rules }})
       }
     }
 

@@ -12,7 +12,6 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%", 
   dpi = 300,
-  eval = FALSE,
   message = FALSE,
   warning = FALSE
 )
@@ -30,42 +29,118 @@ You can install the development version of mermaidreporting with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("data-mermaid/mermaidreporting@development")
+devtools::install_github("data-mermaid/mermaidreporting@development", upgrade = "never")
 ```
 
 ## Data
 
-Data is available from the [`mermaidr`](https://github.com/data-mermaid/mermaidr/tree/package) package. There are details there on authorization, projects, and endpoints.
-
-Most functions in `mermaidreporting` use aggregated sample events data. For example, to query the aggregated belt fish data for a project:
-
-```{r}
-library(mermaidr)
-
-xpdc_sample_events <- mermaid_search_projects(name = "XPDC Kei Kecil 2018") %>%
-  mermaid_get_project_endpoint(endpoint = "beltfishes/sampleevents", limit = 25)
-```
+Data is available from the [`mermaidr`](https://github.com/data-mermaid/mermaidr/tree/package) package. There are details there on authorization and accessing data.
 
 ## Usage
 
-The following demonstrates functions that are available to generate maps, figures, and summary tables. All functions in `mermaidreporting` (and `mermaidr`) are of the form `mermaid_*()`, to take advantage of RStudio auto-completion and make them easier to find when you have other packages loaded.
+All functions in `mermaidreporting` (and `mermaidr`) are of the form `mermaid_*()`, to take advantage of RStudio auto-completion and make them easier to find when you have other packages loaded.
+
+### Data
+
+First, we read in data using `mermaidr`:
+
+```{r}
+library(mermaidr)
+library(dplyr)
+
+my_projects <- mermaid_get_my_projects() 
+
+xpdc <- my_projects %>%
+  filter(name == "XPDC Kei Kecil 2018")
+
+xpdc_fishbelt <- xpdc %>%
+  mermaid_get_project_data(method = "fishbelt", data = "sampleevents")
+```
+
+## Cleaning data
+
+### Data frame columns
+
+The data from `mermaidr` comes in a form that may seem a little unfriendly to work with! 
+
+For example, in `xpdc_fishbelt`, the mean total biomass data is contained in a *data frame column*:
+
+```{r}
+xpdc_fishbelt %>%
+  select(biomass_kgha_by_trophic_group_avg)
+```
+
+Use `mermaid_clean_columns()` to clean this up and split each trophic group into its own column:
+
+```{r}
+library(mermaidreporting)
+
+xpdc_fishbelt %>%
+  select(biomass_kgha_by_trophic_group_avg) %>%
+  mermaid_clean_columns()
+```
+
+This works on Benthic PIT data, as well, and auto-detects any columns in this format to clean!
+
+```{r}
+xpdc_benthicpit <- xpdc %>%
+  mermaid_get_project_data(method = "benthicpit", data = "sampleevents")
+
+xpdc_benthicpit %>%
+  select(percent_cover_by_benthic_category_avg) %>%
+  mermaid_clean_columns()
+```
+
+### Management rules
+
+Default data from `mermaidr` has specific details about management rules:
+
+```{r}
+north_sulawesi_fishbelt <- my_projects %>%
+  filter(name == "North Sulawesi (North Minahasa, Sitaro, Tatoareng MPA) Ecological Survey") %>%
+  mermaid_get_project_data("fishbelt", "sampleevents")
+
+north_sulawesi_fishbelt %>%
+  distinct(management_rules)
+```
+
+If you want to look at management rules more broadly, you can clean up the data and group together Partial Restrictions using `mermaid_clean_management_rules`:
+
+```{r}
+north_sulawesi_fishbelt %>%
+  distinct(management_rules) %>%
+  mermaid_clean_management_rules()
+```
+
+This groups together the Partial Restrictions rules, tidies up the names, and converts any empty strings to `NA`s for better missing-value handling!
+
+If you want to have a different value, instead of `NA`, you can change it via `.missing_value`:
+
+```{r}
+north_sulawesi_fishbelt %>%
+  distinct(management_rules) %>%
+  mermaid_clean_management_rules(.missing_value = "Not Specified")
+```
 
 ## Maps
 
-You can generate map of site locations using `mermaid_map_sites_static()` and `mermaid_map_sites_interactive()`, which produce static and interactive maps, respectively:
+You can generate map of site locations using `mermaid_map_sites_static()` and `mermaid_map_sites_interactive()`, which produce static and interactive maps, respectively.
 
-```{r map-sites-static}
+```{r map-sites-static, eval = FALSE}
 library(mermaidreporting)
 
-mermaid_map_sites_static(xpdc_sample_events)
+xpdc_sites <- xpdc %>%
+  mermaid_get_project_sites()
+
+mermaid_map_sites_static(xpdc_sites)
 ```
 
 ```{r map-sites-interactive, eval = FALSE}
-mermaid_map_sites_interactive(xpdc_sample_events)
+mermaid_map_sites_interactive(xpdc_sites)
 ```
 
 ```{r map-sites-interactive-shot, eval = FALSE, echo = FALSE}
-m <- mermaid_map_sites_interactive(xpdc_sample_events)
+m <- mermaid_map_sites_interactive(xpdc_sites)
 mapview::mapshot(m, file = here::here("man", "figures", "README-mermaid-map-sites-interactive-shot-1.png"))
 knitr::include_graphics("man/figures/README-mermaid-map-sites-interactive-shot-1.png")
 ```
@@ -74,41 +149,45 @@ Note that this is just a screenshot of the interacive plot, but you can try it o
 
 ### Mapping by a variable
 
-You can also map sites by the value of a variable. For example, to map sites by mean total biomass:
+You can also map sites by the value of a variable. For example, to map sites by mean total biomass use `mermaid_map_sites_static()` with `plot_var` set to `biomass_kgha_avg`:
 
-```{r, map-sites-by-mean-total-biomass}
-mermaid_map_sites_static(xpdc_sample_events, biomass_kgha_avg)
+```{r, eval = FALSE}
+mermaid_map_sites_static(xpdc_fishbelt, biomass_kgha_avg)
 ```
 
-Or by reef exposure:
+Or by management rules:
 
-```{r, map-sites-by-management_rules}
-mermaid_map_sites_static(xpdc_sample_events, reef_exposure)
+```{r, map-sites-by-management_rules, eval = FALSE}
+xpdc_fishbelt %>%
+  mermaid_clean_management_rules() %>%
+  mermaid_map_sites_static(management_rules)
 ```
 
-## Figures
+## Plotting methods data
 
-### Plot benthic category percent cover
+### Fish Belt biomass
 
-WIP, once new endpoint is available
+You can plot Fish Belt biomass, split by a grouping variable (such as trophic group) and compared by another variable (such as reef exposure).
 
-### Plot fish belt biomass
-
-You can also plot fish belt biomass, split by a grouping variable (such as trophic group) and compared by another variable (such as reef exposure):
-
-```{r plot-fish-family-biomass-management-rules}
-xpdc_sample_events %>%
+```{r plot-fish-family-biomass-management-rules, eval = FALSE}
+xpdc_fishbelt %>%
   mermaid_plot_fish_belt_biomass(biomass_kgha_by_trophic_group_avg, reef_exposure)
 ```
 
 Or by reef zone:
 
-```{r plot-fish-family-biomass-reef-zone}
-xpdc_sample_events %>%
+```{r plot-fish-family-biomass-reef-zone, eval = FALSE}
+xpdc_fishbelt %>%
   mermaid_plot_fish_belt_biomass(biomass_kgha_by_trophic_group_avg, reef_zone)
 ```
 
-## Summary Table
+### Benthic PIT percent cover
 
-WIP, once new endpoints are available
+Similarly, you can plot Benthic PIT percent cover, split by a grouping variable (such as benthic category) and compared by another variable (such as management rules):
+
+```{r, eval = FALSE}
+xpdc_benthicpit %>%
+  mermaid_clean_management_rules(.missing_value = "Not Specified") %>%
+  mermaid_plot_benthic_pit_percent_cover(percent_cover_by_benthic_category_avg, management_rules)
+```
 

@@ -3,7 +3,7 @@
 #' Expands data-frame columns (df-cols) that come from \code{mermaidr}. Optionally cleans the column names.
 #'
 #' @param .data Input data
-#' @param .append_column_prefix Whether to append the df-cols name as a prefix. Defaults to TRUE.
+#' @param .append_column_prefix Whether to append the df-cols name as a prefix. Defaults to FALSE
 #' @param .clean_names Whether clean the new column names (with snake case as default - see \code{.clean_names_case}), in case they are not clean (e.g. contain spaces, dashes, etc). Note that the name cleaning applies to *all* columns, not just ones resulting from the df-cols.
 #' @param .clean_names_case The desired clean names case (default is "snake").
 #'
@@ -78,7 +78,7 @@
 #' # [38] "management_notes"
 #' # [39] "id"
 #' # [40] "contact_link"
-mermaid_clean_columns <- function(.data, .append_column_prefix = TRUE, .clean_names = TRUE, .clean_names_case = c("snake", "sentence", "title", "lower_camel", "upper_camel")) {
+mermaid_clean_columns <- function(.data, .append_column_prefix = FALSE, .clean_names = TRUE, .clean_names_case = c("snake", "sentence", "title", "lower_camel", "upper_camel")) {
   .clean_names_case <- match.arg(.clean_names_case)
 
   df_cols <- purrr::map_lgl(.data, inherits, "data.frame")

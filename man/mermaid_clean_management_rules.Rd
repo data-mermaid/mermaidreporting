@@ -6,19 +6,22 @@
 \usage{
 mermaid_clean_management_rules(
   .data,
-  management_rules,
+  .management_rules = management_rules,
   .name = NA,
-  .remove = !is.na(.name)
+  .remove = !is.na(.name),
+  .missing_value = NA_character_
 )
 }
 \arguments{
 \item{.data}{Input data}
 
-\item{management_rules}{Column containing management rules, e.g. \code{management_rules}}
+\item{.management_rules}{Column containing management rules. Defaults to \code{management_rules}}
 
-\item{.name}{Name of the clean column, e.g. "Management Rules". Defaults to NA, in which case the name in \code{management_rules} is used.}
+\item{.name}{Name of the clean column, e.g. "Management Rules". By default just replaces the column in \code{.management_rules}.}
 
-\item{.remove}{Whether to remove the \code{management_rules} column (TRUE/FALSE). Only applicable if \code{.name} is set.}
+\item{.remove}{Whether to remove the \code{.management_rules} column (TRUE/FALSE). Only applicable if \code{.name} is set.}
+
+\item{.missing_value}{How to recode missing values. Defaults to a literal NA. Can change to a specific value, e.g. "Not Specified".}
 }
 \value{
 
