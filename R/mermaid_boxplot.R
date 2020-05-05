@@ -35,7 +35,7 @@ mermaid_boxplot <- function(.data, .group_var, group_var_string, .compare_var, c
     }
     if (.replace_dashes) {
       .data <- .data %>%
-        dplyr::mutate_at(dplyr::vars(group, !!.compare_var), stringr::str_replace_all, "-", " ")
+        dplyr::mutate_at(dplyr::vars(.data$group, !!.compare_var), stringr::str_replace_all, "-", " ")
     }
   }
 

@@ -75,7 +75,7 @@ mermaid_map_sites_interactive <- function(.data, plot_var = NULL, basemap = "Esr
 
   # Jitter points
   .data <- .data %>%
-    dplyr::mutate_at(dplyr::vars(latitude, longitude), ~ jitter(.x, factor = jitter))
+    dplyr::mutate_at(dplyr::vars(.data$latitude, .data$longitude), ~ jitter(.x, factor = jitter))
 
   # Initial plot
   p <- leaflet::leaflet(.data) %>%

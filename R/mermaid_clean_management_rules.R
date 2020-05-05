@@ -29,7 +29,7 @@
 #' # [1] "Partial Restrictions" "Open Access"
 #' # [3] "No Take"
 #' }
-mermaid_clean_management_rules <- function(.data, .management_rules = management_rules, .name = NA, .remove = !is.na(.name), .missing_value = NA_character_) {
+mermaid_clean_management_rules <- function(.data, .management_rules = .data$management_rules, .name = NA, .remove = !is.na(.name), .missing_value = NA_character_) {
 
   validate_clean_management_rules(.data, management_rules = rlang::quo_name(rlang::enquo(.management_rules)), .name, .remove)
 
