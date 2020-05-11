@@ -37,3 +37,15 @@ test_that("check_lat_long_bounds works", {
     )
   )
 })
+
+test_that("to_title_case replacws underscores with spaces and converts to title case", {
+  expect_equal(to_title_case("management_rules"), "Management Rules")
+})
+
+test_that("recode_position recodes properly", {
+  expect_equal(recode_position("bottomright"), "br")
+  expect_equal(recode_position("bottomleft"), "bl")
+  expect_equal(recode_position("topright"), "tr")
+  expect_equal(recode_position("topleft"), "tl")
+}
+)
