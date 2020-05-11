@@ -161,7 +161,8 @@ mermaid_map_sites_static <- function(.data, plot_var = NULL, use_fiji_crs = FALS
     p <- p +
       ggplot2::theme(
         axis.text = ggplot2::element_blank(),
-        axis.ticks = ggplot2::element_blank()
+        axis.ticks = ggplot2::element_blank(),
+        axis.title = ggplot2::element_blank()
       )
   }
 
@@ -229,13 +230,4 @@ check_if_static_map <- function(map) {
       call. = FALSE
     )
   }
-}
-
-print.static_map <- function(x, ...) {
-  print(x[["p"]])
-  invisible(x)
-}
-
-map_bounds <- function(x) {
-  x[["bounds"]]
 }
