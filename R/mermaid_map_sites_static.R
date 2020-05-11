@@ -103,7 +103,14 @@ mermaid_map_sites_static <- function(.data, plot_var = NULL, use_fiji_crs = FALS
 
   }
 
-  p <- ggplot2::ggplot(data = sf::st_crop(worldmap, tmaptools::bb(data_sf, ext = bb_ext + 0.1))) +
+  # Basic plot
+  if (use_fiji_crs) {
+    p <- ggplot2::ggplot(data = worldmap)
+  } else {
+    p <- ggplot2::ggplot(data = sf::st_crop(worldmap, tmaptools::bb(data_sf, ext = bb_ext + 0.1)))
+  }
+
+  p <- p +
     ggplot2::geom_sf(fill = "antiquewhite1") +
     ggplot2::theme_minimal()
 
