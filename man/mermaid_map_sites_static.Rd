@@ -8,6 +8,7 @@ mermaid_map_sites_static(
   .data,
   plot_var = NULL,
   use_fiji_crs = FALSE,
+  bb_ext = 1.1,
   jitter = 0.01,
   size = 2,
   colour = "red",
@@ -30,6 +31,8 @@ mermaid_map_sites_static(
 \item{plot_var}{Variable to plot by (optional).}
 
 \item{use_fiji_crs}{Whether to use a coordinate reference system appropriate for mapping Fiji data. Defaults to FALSE.}
+
+\item{bb_ext}{Extension factor of the map's bounding box. Values smaller than 1 reduce the bounding box, and values larger than 1 enlarge the bounding box. The default is 1.1.}
 
 \item{jitter}{Amount of jittering applied to points. Defaults to 0.01. Set to 0 to remove jittering.}
 

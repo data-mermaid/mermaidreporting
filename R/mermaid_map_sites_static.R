@@ -5,6 +5,7 @@
 #' @param .data Data frame with latitude and longitude of sample events sites.
 #' @param plot_var Variable to plot by (optional).
 #' @param use_fiji_crs Whether to use a coordinate reference system appropriate for mapping Fiji data. Defaults to FALSE.
+#' @param bb_ext Extension factor of the map's bounding box. Values smaller than 1 reduce the bounding box, and values larger than 1 enlarge the bounding box. The default is 1.1.
 #' @param jitter Amount of jittering applied to points. Defaults to 0.01. Set to 0 to remove jittering.
 #' @param size Size of points (when \code{plot_var} is not a numeric variable). Defaults to 2.
 #' @param colour Colour of points (when \code{plot_var} is not a character, factor, or logical variable). Defaults to red.
@@ -66,8 +67,7 @@
 #' library(ggplot2)
 #' mermaid_map_sites_static(sample_events, biomass_kgha_avg) +
 #'   labs(title = "Sites by mean total biomass")
-#' }
-mermaid_map_sites_static <- function(.data, plot_var = NULL, use_fiji_crs = FALSE, jitter = 0.01, size = 2, colour = "red", alpha = 0.5,
+mermaid_map_sites_static <- function(.data, plot_var = NULL, use_fiji_crs = FALSE, bb_ext = 1.1, jitter = 0.01, size = 2, colour = "red", alpha = 0.5,
                              label_sites = FALSE, label_axes = TRUE,
                              scale = FALSE, scale_position = c("bottomright", "bottomleft", "topright", "topleft"),
                              arrow = FALSE, arrow_position = c("bottomright", "bottomleft", "topright", "topleft"),
@@ -79,10 +79,6 @@ mermaid_map_sites_static <- function(.data, plot_var = NULL, use_fiji_crs = FALS
   ## Latitude and longitude
   if (!is.null(latitude_bounds) && !is.null(longitude_bounds)) {
     check_lat_long_bounds(latitude_bounds, longitude_bounds, .data[, c("longitude", "latitude")])
-  } else {
-    zoom_bounds <- optimal_zoom(.data[, c("longitude", "latitude")])
-    longitude_bounds <- zoom_bounds[["longitude_bounds"]]
-    latitude_bounds <- zoom_bounds[["latitude_bounds"]]
   }
 
   # Scale, arrow, legend positions
@@ -93,15 +89,20 @@ mermaid_map_sites_static <- function(.data, plot_var = NULL, use_fiji_crs = FALS
   .data <- as.data.frame(.data)
   data_sf <- sf::st_as_sf(.data, coords = c("longitude", "latitude"), crs = 4326)
 
+  worldmap <- rnaturalearth::ne_countries(scale = "large", returnclass = "sf")
+
   if (use_fiji_crs) {
     data_sf <- sf::st_transform(data_sf, crs = 3460)
+    worldmap <- sf::st_transform(worldmap, crs = 3460)
   }
 
-  # Initial plot
-  worldmap <- rnaturalearth::ne_countries(scale = "large", returnclass = "sf")
-  worldmap <- suppressMessages(suppressWarnings(sf::st_crop(worldmap, xmin = longitude_bounds[[1]], xmax = longitude_bounds[[2]], ymin = latitude_bounds[[1]], ymax = latitude_bounds[[2]], crs = ifelse(use_fiji_crs, 3460, 4326))))
+  ## Create bounding box
+  if (is.null(latitude_bounds) && is.null(longitude_bounds)) {
+    .data_bb <- tmaptools::bb(data_sf, ext = bb_ext)
 
-  p <- ggplot2::ggplot(data = worldmap) +
+  }
+
+  p <- ggplot2::ggplot(data = sf::st_crop(worldmap, tmaptools::bb(data_sf, ext = bb_ext + 0.1))) +
     ggplot2::geom_sf(fill = "antiquewhite1") +
     ggplot2::theme_minimal()
 
@@ -168,16 +169,25 @@ mermaid_map_sites_static <- function(.data, plot_var = NULL, use_fiji_crs = FALS
       ggplot2::theme(legend.position = "none")
   }
 
-  # Latitude and longitude bounds
-  p <- p +
-    ggplot2::coord_sf(xlim = longitude_bounds, ylim = latitude_bounds, expand = FALSE)
-
+  # Theme and limits
   p <- p +
     ggplot2::theme(
       panel.background = ggplot2::element_rect(fill = "aliceblue"),
       panel.grid.major = ggplot2::element_line(colour = "transparent")
     )
 
+  # Limits
+  if (is.null(latitude_bounds) && is.null(longitude_bounds)) {
+    p <- p +
+      ggplot2::coord_sf(xlim = .data_bb[c("xmin", "xmax")], ylim = .data_bb[c("ymin", "ymax")], expand = FALSE)
+    longitude_bounds <- ggplot2::ggplot_build(p)$layout$panel_scales_x[[1]]$range$range
+    latitude_bounds <- ggplot2::ggplot_build(p)$layout$panel_scales_y[[1]]$range$range
+  } else {
+    p <- p +
+      ggplot2::coord_sf(xlim = longitude_bounds, ylim = latitude_bounds, expand = FALSE)
+  }
+
+  # Return latitude and longitude bounds
   attr(p, "bounds") <- list(
     latitude_bounds = latitude_bounds,
     longitude_bounds = longitude_bounds
