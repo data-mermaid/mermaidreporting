@@ -5,6 +5,7 @@
 #' @param .data Data frame with latitude and longitude of sample events sites.
 #' @param plot_var Variable to plot by (optional).
 #' @param use_fiji_crs Whether to use a coordinate reference system appropriate for mapping Fiji data. Defaults to FALSE.
+#' @param bb_ext Extension factor of the map's bounding box. Values smaller than 1 reduce the bounding box, and values larger than 1 enlarge the bounding box. The default is 1.1.
 #' @param jitter Amount of jittering applied to points. Defaults to 0.01. Set to 0 to remove jittering.
 #' @param size Size of points (when \code{plot_var} is not a numeric variable). Defaults to 2.
 #' @param colour Colour of points (when \code{plot_var} is not a character, factor, or logical variable). Defaults to red.
@@ -65,12 +66,12 @@
 #' library(ggplot2)
 #' mermaid_map_sites_static(sample_events, biomass_kgha_avg) +
 #'   labs(title = "Sites by mean total biomass")
-mermaid_map_sites_static <- function(.data, plot_var = NULL, use_fiji_crs = FALSE, jitter = 0.01, size = 2, colour = "red", alpha = 0.5,
+mermaid_map_sites_static <- function(.data, plot_var = NULL, use_fiji_crs = FALSE, bb_ext = 1.1, jitter = 0.01, size = 2, colour = "red", alpha = 0.5,
                              label_sites = FALSE, label_axes = TRUE,
                              scale = FALSE, scale_position = c("bottomright", "bottomleft", "topright", "topleft"),
                              arrow = FALSE, arrow_position = c("bottomright", "bottomleft", "topright", "topleft"),
                              legend = TRUE, legend_position = c("right", "left", "top", "bottom"),
-                             latitude_bounds = NULL, longitude_bounds = NULL, bb_ext = 1) {
+                             latitude_bounds = NULL, longitude_bounds = NULL) {
 
   # Check inputs
 
@@ -96,11 +97,11 @@ mermaid_map_sites_static <- function(.data, plot_var = NULL, use_fiji_crs = FALS
 
   ## Create bounding box
   if (is.null(latitude_bounds) && is.null(longitude_bounds)) {
-    .data_bb <- tmaptools::bb(data_sf, ext = 1.1)
+    .data_bb <- tmaptools::bb(data_sf, ext = bb_ext)
 
   }
 
-  p <- ggplot2::ggplot(data = sf::st_crop(worldmap, tmaptools::bb(data_sf, ext = 1.2))) +
+  p <- ggplot2::ggplot(data = sf::st_crop(worldmap, tmaptools::bb(data_sf, ext = bb_ext + 0.1))) +
     ggplot2::geom_sf(fill = "antiquewhite1") +
     ggplot2::theme_minimal()
 
