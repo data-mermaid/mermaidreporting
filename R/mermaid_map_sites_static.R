@@ -173,9 +173,20 @@ mermaid_map_sites_static <- function(.data, plot_var = NULL, use_fiji_crs = FALS
     ggplot2::theme(
       panel.background = ggplot2::element_rect(fill = "aliceblue"),
       panel.grid.major = ggplot2::element_line(colour = "transparent")
-    ) +
-    ggplot2::coord_sf(xlim = .data_bb[c("xmin", "xmax")], ylim = .data_bb[c("ymin", "ymax")], expand = FALSE)
+    )
 
+  # Limits
+  if (is.null(latitude_bounds) && is.null(longitude_bounds)) {
+    p <- p +
+      ggplot2::coord_sf(xlim = .data_bb[c("xmin", "xmax")], ylim = .data_bb[c("ymin", "ymax")], expand = FALSE)
+    longitude_bounds <- ggplot2::ggplot_build(p)$layout$panel_scales_x[[1]]$range$range
+    latitude_bounds <- ggplot2::ggplot_build(p)$layout$panel_scales_y[[1]]$range$range
+  } else {
+    p <- p +
+      ggplot2::coord_sf(xlim = longitude_bounds, ylim = latitude_bounds, expand = FALSE)
+  }
+
+  # Return latitude and longitude bounds
   attr(p, "bounds") <- list(
     latitude_bounds = latitude_bounds,
     longitude_bounds = longitude_bounds
