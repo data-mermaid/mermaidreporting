@@ -67,6 +67,7 @@
 #' library(ggplot2)
 #' mermaid_map_sites_static(sample_events, biomass_kgha_avg) +
 #'   labs(title = "Sites by mean total biomass")
+#' }
 mermaid_map_sites_static <- function(.data, plot_var = NULL, use_fiji_crs = FALSE, bb_ext = 1.1, jitter = 0.01, size = 2, colour = "red", alpha = 0.5,
                              label_sites = FALSE, label_axes = TRUE,
                              scale = FALSE, scale_position = c("bottomright", "bottomleft", "topright", "topleft"),

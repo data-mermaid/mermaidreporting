@@ -58,10 +58,11 @@ check_bounds <- function(x, type = c("latitude", "longitude")) {
 }
 
 check_bounds_contain_points <- function(points, latitude_bounds, longitude_bounds) {
-  contains_points <- zoom_fits(points, list(latitude_bounds = latitude_bounds, longitude_bounds = longitude_bounds))
 
   latitude_range <- range(points[["latitude"]])
   longitude_range <- range(points[["longitude"]])
+
+  contains_points <- latitude_bounds[[1]] <= latitude_range[[1]] && latitude_bounds[[2]] >= latitude_range[[2]] && longitude_bounds[[1]] <= longitude_range[[1]] && longitude_bounds[[2]] >= longitude_range[[2]]
 
   if (!contains_points) {
     warning("Not all sites are within the specified `latitude_bounds` and `longitude_bounds`.
