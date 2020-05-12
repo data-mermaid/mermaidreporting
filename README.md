@@ -258,6 +258,6 @@ variable (such as benthic category) and compared by another variable
 
 ``` r
 xpdc_benthicpit %>%
-  mermaid_clean_management_rules(.missing_value = "Not Specified") %>%
+  mermaid_clean_management_rules(missing_value = "Not Specified") %>%
   mermaid_plot_benthic_pit_percent_cover(percent_cover_by_benthic_category_avg, management_rules)
 ```

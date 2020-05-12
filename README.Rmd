@@ -126,7 +126,7 @@ north_sulawesi_fishbelt %>%
 
 You can generate map of site locations using `mermaid_map_sites_static()` and `mermaid_map_sites_interactive()`, which produce static and interactive maps, respectively.
 
-```{r map-sites-static, results = "hide"}
+```{r map-sites-static, fig.show = "hide"}
 library(mermaidreporting)
 
 xpdc_sites <- xpdc %>%
@@ -135,14 +135,8 @@ xpdc_sites <- xpdc %>%
 mermaid_map_sites_static(xpdc_sites)
 ```
 
-```{r map-sites-interactive, results = "hide"}
+```{r map-sites-interactive, eval = FALSE}
 mermaid_map_sites_interactive(xpdc_sites)
-```
-
-```{r map-sites-interactive-shot, eval = FALSE, echo = FALSE}
-m <- mermaid_map_sites_interactive(xpdc_sites)
-mapview::mapshot(m, file = here::here("man", "figures", "README-mermaid-map-sites-interactive-shot-1.png"))
-knitr::include_graphics("man/figures/README-mermaid-map-sites-interactive-shot-1.png")
 ```
 
 Note that this is just a screenshot of the interacive plot, but you can try it out in an interactive R session by running the above code!
@@ -151,13 +145,13 @@ Note that this is just a screenshot of the interacive plot, but you can try it o
 
 You can also map sites by the value of a variable. For example, to map sites by mean total biomass use `mermaid_map_sites_static()` with `plot_var` set to `biomass_kgha_avg`:
 
-```{r, results = "hide"}
+```{r, fig.show = "hide"}
 mermaid_map_sites_static(xpdc_fishbelt, biomass_kgha_avg)
 ```
 
 Or by management rules:
 
-```{r, map-sites-by-management_rules, results = "hide"}
+```{r, map-sites-by-management_rules, fig.show = "hide"}
 xpdc_fishbelt %>%
   mermaid_clean_management_rules() %>%
   mermaid_map_sites_static(management_rules)
@@ -169,14 +163,14 @@ xpdc_fishbelt %>%
 
 You can plot Fish Belt biomass, split by a grouping variable (such as trophic group) and compared by another variable (such as reef exposure).
 
-```{r plot-fish-family-biomass-management-rules, results = "hide"}
+```{r plot-fish-family-biomass-management-rules, fig.show = "hide"}
 xpdc_fishbelt %>%
   mermaid_plot_fish_belt_biomass(biomass_kgha_by_trophic_group_avg, reef_exposure)
 ```
 
 Or by reef zone:
 
-```{r plot-fish-family-biomass-reef-zone, results = "hide"}
+```{r plot-fish-family-biomass-reef-zone, fig.show = "hide"}
 xpdc_fishbelt %>%
   mermaid_plot_fish_belt_biomass(biomass_kgha_by_trophic_group_avg, reef_zone)
 ```
@@ -185,7 +179,7 @@ xpdc_fishbelt %>%
 
 Similarly, you can plot Benthic PIT percent cover, split by a grouping variable (such as benthic category) and compared by another variable (such as management rules):
 
-```{r, results = "hide"}
+```{r, fig.show = "hide"}
 xpdc_benthicpit %>%
   mermaid_clean_management_rules(missing_value = "Not Specified") %>%
   mermaid_plot_benthic_pit_percent_cover(percent_cover_by_benthic_category_avg, management_rules)
