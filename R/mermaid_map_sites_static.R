@@ -78,7 +78,8 @@ mermaid_map_sites_static <- function(.data, plot_var = NULL, use_fiji_crs = FALS
   # Check inputs
 
   ## Latitude and longitude
-  if (!is.null(latitude_bounds) && !is.null(longitude_bounds)) {
+  bounds_supplied <- !is.null(latitude_bounds) && !is.null(longitude_bounds)
+  if (bounds_supplied) {
     check_lat_long_bounds(latitude_bounds, longitude_bounds, .data[, c("longitude", "latitude")])
   }
 
@@ -98,13 +99,13 @@ mermaid_map_sites_static <- function(.data, plot_var = NULL, use_fiji_crs = FALS
   }
 
   ## Create bounding box
-  if (is.null(latitude_bounds) && is.null(longitude_bounds)) {
+  if (!bounds_supplied) {
     .data_bb <- tmaptools::bb(data_sf, ext = bb_ext)
 
   }
 
   # Basic plot
-  if (use_fiji_crs) {
+  if (use_fiji_crs | bounds_supplied) {
     p <- ggplot2::ggplot(data = worldmap)
   } else {
     p <- suppressWarnings(suppressMessages(ggplot2::ggplot(data = sf::st_crop(worldmap, tmaptools::bb(data_sf, ext = bb_ext + 0.1)))))
@@ -186,7 +187,7 @@ mermaid_map_sites_static <- function(.data, plot_var = NULL, use_fiji_crs = FALS
     )
 
   # Limits
-  if (is.null(latitude_bounds) && is.null(longitude_bounds)) {
+  if (!bounds_supplied) {
     p <- p +
       ggplot2::coord_sf(xlim = .data_bb[c("xmin", "xmax")], ylim = .data_bb[c("ymin", "ymax")], expand = FALSE)
     longitude_bounds <- ggplot2::ggplot_build(p)$layout$panel_scales_x[[1]]$range$range
