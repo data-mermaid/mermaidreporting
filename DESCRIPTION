@@ -35,7 +35,7 @@ Imports:
     tidyselect,
     purrr,
     tmaptools,
-    mermaidr (>= 0.0.1)
+    mermaidr (>= 0.0.1.9009)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0
@@ -45,4 +45,4 @@ Suggests:
     mapview
 Remotes: 
     ropensci/rnaturalearthhires,
-    data-mermaid/mermaidr@package
+    data-mermaid/mermaidr@dev
