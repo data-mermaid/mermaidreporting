@@ -107,7 +107,7 @@ mermaid_map_sites_static <- function(.data, plot_var = NULL, use_fiji_crs = FALS
   if (use_fiji_crs) {
     p <- ggplot2::ggplot(data = worldmap)
   } else {
-    p <- ggplot2::ggplot(data = sf::st_crop(worldmap, tmaptools::bb(data_sf, ext = bb_ext + 0.1)))
+    p <- suppressWarnings(suppressMessages(ggplot2::ggplot(data = sf::st_crop(worldmap, tmaptools::bb(data_sf, ext = bb_ext + 0.1)))))
   }
 
   p <- p +
