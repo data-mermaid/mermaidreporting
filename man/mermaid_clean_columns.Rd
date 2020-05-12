@@ -6,19 +6,19 @@
 \usage{
 mermaid_clean_columns(
   .data,
-  .append_column_prefix = FALSE,
-  .clean_names = TRUE,
-  .clean_names_case = c("snake", "sentence", "title", "lower_camel", "upper_camel")
+  append_column_prefix = FALSE,
+  clean_names = TRUE,
+  clean_names_case = c("snake", "sentence", "title", "lower_camel", "upper_camel")
 )
 }
 \arguments{
 \item{.data}{Input data}
 
-\item{.append_column_prefix}{Whether to append the df-cols name as a prefix. Defaults to FALSE}
+\item{append_column_prefix}{Whether to append the df-cols name as a prefix. Defaults to FALSE}
 
-\item{.clean_names}{Whether clean the new column names (with snake case as default - see \code{.clean_names_case}), in case they are not clean (e.g. contain spaces, dashes, etc). Note that the name cleaning applies to *all* columns, not just ones resulting from the df-cols.}
+\item{clean_names}{Whether clean the new column names (with snake case as default - see \code{.clean_names_case}), in case they are not clean (e.g. contain spaces, dashes, etc). Note that the name cleaning applies to *all* columns, not just ones resulting from the df-cols.}
 
-\item{.clean_names_case}{The desired clean names case (default is "snake").}
+\item{clean_names_case}{The desired clean names case (default is "snake").}
 }
 \description{
 Expands data-frame columns (df-cols) that come from \code{mermaidr}. Optionally cleans the column names.

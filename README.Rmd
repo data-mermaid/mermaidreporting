@@ -114,12 +114,12 @@ north_sulawesi_fishbelt %>%
 
 This groups together the Partial Restrictions rules, tidies up the names, and converts any empty strings to `NA`s for better missing-value handling!
 
-If you want to have a different value, instead of `NA`, you can change it via `.missing_value`:
+If you want to have a different value, instead of `NA`, you can change it via `missing_value`:
 
 ```{r}
 north_sulawesi_fishbelt %>%
   distinct(management_rules) %>%
-  mermaid_clean_management_rules(.missing_value = "Not Specified")
+  mermaid_clean_management_rules(missing_value = "Not Specified")
 ```
 
 ## Maps

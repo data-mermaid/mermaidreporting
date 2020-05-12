@@ -27,9 +27,9 @@ test_that("mermaid_clean_management_rules properly recodes", {
 })
 
 test_that("mermaid_clean_management_rules properly renames and removes", {
-  expect_named(mermaid_clean_management_rules(df, rules, .name = "Management Rules"), "Management Rules")
+  expect_named(mermaid_clean_management_rules(df, rules, name = "Management Rules"), "Management Rules")
 
-  expect_named(mermaid_clean_management_rules(df, rules, .name = "Management Rules", .remove = FALSE), c("rules", "Management Rules"))
+  expect_named(mermaid_clean_management_rules(df, rules, name = "Management Rules", remove = FALSE), c("rules", "Management Rules"))
 })
 
 test_that(
@@ -41,7 +41,7 @@ test_that(
 
 test_that(
   "mermaid_clean_management_rules provides a message if .name is management_rules",
-  expect_message(mermaid_clean_management_rules(df, rules, .name = "rules"), "Don't specify")
+  expect_message(mermaid_clean_management_rules(df, rules, name = "rules"), "Don't specify")
 )
 
 test_that("mermaid_clean_management_rules errors if management_rules is not in .data", {
@@ -54,6 +54,6 @@ test_that("mermaid_clean_management_rules errors if .data is not a df", {
   expect_silent(mermaid_clean_management_rules(df, rules))
 })
 
-test_that("mermaid_clean_management_rules errors if .name is not set and .remove is TRUE", {
-  expect_error(mermaid_clean_management_rules(df, rules, .remove = TRUE), "You can't")
+test_that("mermaid_clean_management_rules errors if .name is not set and remove is TRUE", {
+  expect_error(mermaid_clean_management_rules(df, rules, remove = TRUE), "You can't")
 })

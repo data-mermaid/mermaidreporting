@@ -4,10 +4,10 @@
 #'
 #'
 #' @param .data Input data
-#' @param .management_rules Column containing management rules. Defaults to \code{management_rules}
-#' @param .name Name of the clean column, e.g. "Management Rules". By default just replaces the column in \code{.management_rules}.
-#' @param .remove Whether to remove the \code{.management_rules} column (TRUE/FALSE). Only applicable if \code{.name} is set.
-#' @param .missing_value How to recode missing values. Defaults to a literal NA. Can change to a specific value, e.g. "Not Specified".
+#' @param management_rules Column containing management rules. Defaults to \code{management_rules}
+#' @param name Name of the clean column, e.g. "Management Rules". By default just replaces the column in \code{.management_rules}.
+#' @param remove Whether to remove the \code{.management_rules} column (TRUE/FALSE). Only applicable if \code{.name} is set.
+#' @param missing_value How to recode missing values. Defaults to a literal NA. Can change to a specific value, e.g. "Not Specified".
 #'
 #' @export
 #'
@@ -29,43 +29,43 @@
 #' # [1] "Partial Restrictions" "Open Access"
 #' # [3] "No Take"
 #' }
-mermaid_clean_management_rules <- function(.data, .management_rules = .data$management_rules, .name = NA, .remove = !is.na(.name), .missing_value = NA_character_) {
+mermaid_clean_management_rules <- function(.data, management_rules = .data$management_rules, name = NA, remove = !is.na(name), missing_value = NA_character_) {
 
-  validate_clean_management_rules(.data, management_rules = rlang::quo_name(rlang::enquo(.management_rules)), .name, .remove)
+  validate_clean_management_rules(.data, management_rules = rlang::quo_name(rlang::enquo(management_rules)), name, remove)
 
-  check_management_rules_values(values = dplyr::pull(.data, {{.management_rules}}))
+  check_management_rules_values(values = dplyr::pull(.data, {{management_rules}}))
 
   clean_rules <- .data %>%
     dplyr::mutate(clean_rules := dplyr::case_when(
-      tolower({{.management_rules}}) == "no take" ~ "No Take",
-      tolower({{.management_rules}}) == "open access" ~ "Open Access",
-      {{.management_rules}} == "" ~ .missing_value,
+      tolower({{management_rules}}) == "no take" ~ "No Take",
+      tolower({{management_rules}}) == "open access" ~ "Open Access",
+      {{management_rules}} == "" ~ missing_value,
       grepl(
         "periodic closure|size limit|gear restriction|species restriction",
-        tolower({{ .management_rules }})
+        tolower({{ management_rules }})
       ) ~ "Partial Restrictions"
     ))
 
-    if (is.na(.name) | rlang::quo_name(rlang::enquo(.management_rules)) == .name) {
+    if (is.na(name) | rlang::quo_name(rlang::enquo(management_rules)) == name) {
 
       clean_rules <- clean_rules %>%
-        dplyr::select(-{{ .management_rules }}) %>%
-        dplyr::rename({{ .management_rules }} := clean_rules)
+        dplyr::select(-{{ management_rules }}) %>%
+        dplyr::rename({{ management_rules }} := clean_rules)
 
     } else {
       clean_rules <- clean_rules %>%
-        dplyr::rename({{ .name }} := clean_rules)
+        dplyr::rename({{ name }} := clean_rules)
 
-      if (.remove) {
+      if (remove) {
         clean_rules <- clean_rules %>%
-          dplyr::select(-{{ .management_rules }})
+          dplyr::select(-{{ management_rules }})
       }
     }
 
   return(clean_rules)
 }
 
-validate_clean_management_rules <- function(.data, management_rules, .name, .remove) {
+validate_clean_management_rules <- function(.data, management_rules, name, remove) {
   # Check .data is a data frame
   if(!inherits(.data, "data.frame")) {
     stop("`.data` must be a data frame.", call. = FALSE)
@@ -76,13 +76,13 @@ validate_clean_management_rules <- function(.data, management_rules, .name, .rem
     stop("`.data` does not contain column `", management_rules, "`", call. = FALSE)
   }
   # .name is the same as management_rules
-  if (!is.na(.name) & management_rules == .name) {
-    message("Don't specify `.name` if it's the same as `management_rules`.", call. = FALSE)
+  if (!is.na(name) & management_rules == name) {
+    message("Don't specify `name` if it's the same as `management_rules`.", call. = FALSE)
   }
 
   # .remove is TRUE and .name is not set
-  if (.remove & is.na(.name)) {
-    stop("You can't set `.remove = TRUE` (to remove the original `management_rules` column ) without specifying `.name`.", call. = FALSE)
+  if (remove & is.na(name)) {
+    stop("You can't set `remove = TRUE` (to remove the original `management_rules` column ) without specifying `name`.", call. = FALSE)
   }
 }
 

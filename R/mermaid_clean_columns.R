@@ -3,9 +3,9 @@
 #' Expands data-frame columns (df-cols) that come from \code{mermaidr}. Optionally cleans the column names.
 #'
 #' @param .data Input data
-#' @param .append_column_prefix Whether to append the df-cols name as a prefix. Defaults to FALSE
-#' @param .clean_names Whether clean the new column names (with snake case as default - see \code{.clean_names_case}), in case they are not clean (e.g. contain spaces, dashes, etc). Note that the name cleaning applies to *all* columns, not just ones resulting from the df-cols.
-#' @param .clean_names_case The desired clean names case (default is "snake").
+#' @param append_column_prefix Whether to append the df-cols name as a prefix. Defaults to FALSE
+#' @param clean_names Whether clean the new column names (with snake case as default - see \code{.clean_names_case}), in case they are not clean (e.g. contain spaces, dashes, etc). Note that the name cleaning applies to *all* columns, not just ones resulting from the df-cols.
+#' @param clean_names_case The desired clean names case (default is "snake").
 #'
 #' @export
 #'
@@ -80,13 +80,13 @@
 #' # [39] "id"
 #' # [40] "contact_link"
 #' }
-mermaid_clean_columns <- function(.data, .append_column_prefix = FALSE, .clean_names = TRUE, .clean_names_case = c("snake", "sentence", "title", "lower_camel", "upper_camel")) {
-  .clean_names_case <- match.arg(.clean_names_case)
+mermaid_clean_columns <- function(.data, append_column_prefix = FALSE, clean_names = TRUE, clean_names_case = c("snake", "sentence", "title", "lower_camel", "upper_camel")) {
+  clean_names_case <- match.arg(clean_names_case)
 
   df_cols <- purrr::map_lgl(.data, inherits, "data.frame")
   df_cols <- names(df_cols[df_cols])
 
-  if (!.append_column_prefix) {
+  if (!append_column_prefix) {
     df_unpack <- .data %>%
       tidyr::unpack(
         cols = tidyselect::all_of(df_cols)
@@ -95,14 +95,14 @@ mermaid_clean_columns <- function(.data, .append_column_prefix = FALSE, .clean_n
     df_unpack <- .data %>%
       tidyr::unpack(
         cols = tidyselect::all_of(df_cols),
-        names_sep = ifelse(.append_column_prefix, "_", NULL)
+        names_sep = ifelse(append_column_prefix, "_", NULL)
       )
   }
 
 
-  if (.clean_names) {
+  if (clean_names) {
     df_unpack %>%
-      janitor::clean_names(case = .clean_names_case)
+      janitor::clean_names(case = clean_names_case)
   } else {
     df_unpack
   }
