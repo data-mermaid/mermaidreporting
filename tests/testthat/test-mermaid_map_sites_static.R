@@ -3,10 +3,13 @@ library(ggplot2)
 library(mermaidr)
 library(dplyr)
 
-sample_events <- mermaid_search_projects(name = "XPDC Kei Kecil 2018") %>%
-  mermaid_get_project_data("fishbelt", "sampleevents", limit = 25)
-
 test_that("mermaid_map_sites_static returns a map containing all the points", {
+  skip_if_offline()
+  skip_on_cran()
+  skip_on_ci()
+
+  sample_events <- mermaid_search_projects(name = "XPDC Kei Kecil 2018") %>%
+    mermaid_get_project_data("fishbelt", "sampleevents", limit = 25)
   p <- mermaid_map_sites_static(sample_events)
   expect_equal(nrow(ggplot_build(p)$data[[2]]), 25) # TODO: better way to extract this, so next test passes
 
@@ -18,6 +21,11 @@ test_that("mermaid_map_sites_static returns a map containing all the points", {
 # })
 
 test_that("mermaid_map_sites_static can plot by variable, adjusting size when variable is numeric and colour when it's categorical", {
+  skip_if_offline()
+  skip_on_cran()
+  skip_on_ci()
+  sample_events <- mermaid_search_projects(name = "XPDC Kei Kecil 2018") %>%
+    mermaid_get_project_data("fishbelt", "sampleevents", limit = 25)
   p <- mermaid_map_sites_static(sample_events, biomass_kgha_avg)
   expect_equal(rlang::as_name(p$layers[[2]]$mapping$size), "biomass_kgha_avg")
 
@@ -26,6 +34,12 @@ test_that("mermaid_map_sites_static can plot by variable, adjusting size when va
 })
 
 test_that("mermaid_map_sites_static visual options work", {
+  skip_if_offline()
+  skip_on_cran()
+  skip_on_ci()
+  sample_events <- mermaid_search_projects(name = "XPDC Kei Kecil 2018") %>%
+    mermaid_get_project_data("fishbelt", "sampleevents", limit = 25)
+
   p <- mermaid_map_sites_static(sample_events, label_sites = TRUE, scale = TRUE, arrow = TRUE, label_axes = FALSE, legend = FALSE)
   gb <- ggplot_build(p)
   expect_true("label" %in% names(gb$data[[3]]))
@@ -46,6 +60,12 @@ test_that("mermaid_static_map_bounds returns an error when the map doesn't have 
 })
 
 test_that("mermaid_static_map_bounds returns bounds for a static map", {
+  skip_if_offline()
+  skip_on_cran()
+  skip_on_ci()
+
+  sample_events <- mermaid_search_projects(name = "XPDC Kei Kecil 2018") %>%
+    mermaid_get_project_data("fishbelt", "sampleevents", limit = 25)
   p <- mermaid_map_sites_static(sample_events)
   b <- mermaid_static_map_bounds(p)
   expect_named(b, c("latitude_bounds", "longitude_bounds"))
@@ -54,6 +74,12 @@ test_that("mermaid_static_map_bounds returns bounds for a static map", {
 })
 
 test_that("mermaid_static_map_bounds has correct CRS for input data", {
+  skip_if_offline()
+  skip_on_cran()
+  skip_on_ci()
+
+  sample_events <- mermaid_search_projects(name = "XPDC Kei Kecil 2018") %>%
+    mermaid_get_project_data("fishbelt", "sampleevents", limit = 25)
   p <- mermaid_map_sites_static(sample_events)
   gb <- ggplot_build(p)
   expect_equal(sf::st_crs(p$layers[[2]]$data)$epsg, 4326)
@@ -67,6 +93,12 @@ test_that("mermaid_static_map_bounds has correct CRS for input data", {
 })
 
 test_that("set lat/long bounds are used, and warn if they exclude points", {
+  skip_if_offline()
+  skip_on_cran()
+  skip_on_ci()
+
+  sample_events <- mermaid_search_projects(name = "XPDC Kei Kecil 2018") %>%
+    mermaid_get_project_data("fishbelt", "sampleevents", limit = 25)
   expect_warning(mermaid_map_sites_static(sample_events, latitude_bounds = c(-6, -5.8), longitude_bounds = c(132, 133)), "Not all sites are within")
   expect_equal(mermaid_static_map_bounds(mermaid_map_sites_static(sample_events, latitude_bounds = c(-6, -5.8), longitude_bounds = c(132, 133))), list(latitude_bounds = c(-6, -5.8), longitude_bounds = c(132, 133)))
 })
