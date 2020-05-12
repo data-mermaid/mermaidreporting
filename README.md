@@ -64,15 +64,15 @@ xpdc_fishbelt %>%
 #> # A tibble: 46 x 1
 #>    biomass_kgha_by… $piscivore $planktivore $`invertivore-m… $`herbivore-det…
 #>               <dbl>      <dbl>        <dbl>            <dbl>            <dbl>
-#>  1            30.2       43.6         280.              16.8            34.9 
+#>  1            42.3       58.1         392.              20.2            55.9 
 #>  2            NA         27.1          26.5             NA               1.38
 #>  3            19.7       32.4         642.             384.             48.4 
-#>  4             5.81      22.7          15.2             33.1            22.7 
-#>  5             7.46      26.2         233.              44.5           105.  
-#>  6            42.7       13.4         772.              12.1            35.3 
-#>  7             6.42      16.0         213.              38.1            25.3 
+#>  4             5.81      31.8          15.2             33.1            22.7 
+#>  5             7.46      36.6         349.              74.2           105.  
+#>  6            42.7       21.5         772.              12.1            41.2 
+#>  7             6.42      21.3         267.              38.1            30.4 
 #>  8             2.49      NA           159.              23.7            25.1 
-#>  9            17.3       41.8         780.              72.7            23.7 
+#>  9            17.3       50.2         780.              72.7            31.6 
 #> 10            NA          2.52         96.9              1.6            NA   
 #> # … with 36 more rows, and 3 more variables: $`invertivore-sessile` <dbl>,
 #> #   $`herbivore-macroalgae` <dbl>, $other <dbl>
@@ -90,15 +90,15 @@ xpdc_fishbelt %>%
 #> # A tibble: 46 x 8
 #>    omnivore piscivore planktivore invertivore_mob… herbivore_detri…
 #>       <dbl>     <dbl>       <dbl>            <dbl>            <dbl>
-#>  1    30.2      43.6        280.              16.8            34.9 
+#>  1    42.3      58.1        392.              20.2            55.9 
 #>  2    NA        27.1         26.5             NA               1.38
 #>  3    19.7      32.4        642.             384.             48.4 
-#>  4     5.81     22.7         15.2             33.1            22.7 
-#>  5     7.46     26.2        233.              44.5           105.  
-#>  6    42.7      13.4        772.              12.1            35.3 
-#>  7     6.42     16.0        213.              38.1            25.3 
+#>  4     5.81     31.8         15.2             33.1            22.7 
+#>  5     7.46     36.6        349.              74.2           105.  
+#>  6    42.7      21.5        772.              12.1            41.2 
+#>  7     6.42     21.3        267.              38.1            30.4 
 #>  8     2.49     NA          159.              23.7            25.1 
-#>  9    17.3      41.8        780.              72.7            23.7 
+#>  9    17.3      50.2        780.              72.7            31.6 
 #> 10    NA         2.52        96.9              1.6            NA   
 #> # … with 36 more rows, and 3 more variables: invertivore_sessile <dbl>,
 #> #   herbivore_macroalgae <dbl>, other <dbl>
@@ -175,12 +175,12 @@ names, and converts any empty strings to `NA`s for better missing-value
 handling\!
 
 If you want to have a different value, instead of `NA`, you can change
-it via `.missing_value`:
+it via `missing_value`:
 
 ``` r
 north_sulawesi_fishbelt %>%
   distinct(management_rules) %>%
-  mermaid_clean_management_rules(.missing_value = "Not Specified")
+  mermaid_clean_management_rules(missing_value = "Not Specified")
 #> # A tibble: 5 x 1
 #>   management_rules    
 #>   <chr>               

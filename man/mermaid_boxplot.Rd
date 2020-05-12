@@ -6,34 +6,34 @@
 \usage{
 mermaid_boxplot(
   .data,
-  .group_var,
+  group_var,
   group_var_string,
-  .compare_var,
+  compare_var,
   compare_var_string,
   y_axis_name,
-  .clean_values = TRUE,
-  .clean_values_case = c("title", "sentence"),
-  .replace_dashes = TRUE
+  clean_values = TRUE,
+  clean_values_case = c("title", "sentence"),
+  replace_dashes = TRUE
 )
 }
 \arguments{
-\item{.data}{Sample event data containing mean fish belt biomass, with variables indicated in \code{.group_var} and \code{.compare_var}. Likely the output from a \code{mermaid_get_project_endpoint()} call.}
+\item{.data}{Sample event data containing mean fish belt biomass, with variables indicated in \code{group_var} and \code{compare_var}. Likely the output from a \code{mermaid_get_project_data()} call.}
 
-\item{.group_var}{Variable to group by, e.g. \code{biomass_kgha_by_trophic_group_avg}. Must be a data frame column.}
+\item{group_var}{Variable to group by, e.g. \code{biomass_kgha_by_trophic_group_avg}. Must be a data frame column.}
 
-\item{group_var_string}{String version of \code{.group_var}. Internal use only.}
+\item{group_var_string}{String version of \code{group_var}. Internal use only.}
 
-\item{.compare_var}{Variable to compare by, e.g. \code{management_rules}}
+\item{compare_var}{Variable to compare by, e.g. \code{management_rules}}
 
-\item{compare_var_string}{String version of \code{.compare_var}. Internal use only.}
+\item{compare_var_string}{String version of \code{compare_var}. Internal use only.}
 
 \item{y_axis_name}{Name of the y axis. Internal use only.}
 
-\item{.clean_values}{Whether to clean the values in \code{.group_var} and \code{.compare_var} (with title case as default - see \code{.clean_values_case}), in case they are not clean (e.g. contain dashes, underscores, are lowercase, etc). Defaults to TRUE.}
+\item{clean_values}{Whether to clean the values in \code{group_var} and \code{.compare_var} (with title case as default - see \code{clean_values_case}), in case they are not clean (e.g. contain dashes, underscores, are lowercase, etc). Defaults to TRUE.}
 
-\item{.clean_values_case}{The desired clean values case (default is "title"). For example, if a value is "invertivore-mobile", title case converts it to "Invertivore Mobile" while sentence case converts it to "Invertivore mobile". If you don't want to replace dashes with spaces (e.g. get "Interivore-Mobile", set \code{.replace_dashes = FALSE}.}
+\item{clean_values_case}{The desired clean values case (default is "title"). For example, if a value is "invertivore-mobile", title case converts it to "Invertivore Mobile" while sentence case converts it to "Invertivore mobile". If you don't want to replace dashes with spaces (e.g. get "Interivore-Mobile", set \code{replace_dashes = FALSE}.}
 
-\item{.replace_dashes}{Whether to also remove dashes from values when cleaning them. Defaults to TRUE.}
+\item{replace_dashes}{Whether to also remove dashes from values when cleaning them. Defaults to TRUE.}
 }
 \description{
 MERMAID boxplots

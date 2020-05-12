@@ -6,7 +6,7 @@
 \usage{
 mermaid_clean_management_rules(
   .data,
-  management_rules = .data$management_rules,
+  management_rules = management_rules,
   name = NA,
   remove = !is.na(name),
   missing_value = NA_character_
