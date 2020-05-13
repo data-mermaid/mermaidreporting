@@ -10,7 +10,7 @@
 #' @param size Size of points (when \code{plot_var} is not a numeric variable). Defaults to 2.
 #' @param colour Colour of points (when \code{plot_var} is not a character, factor, or logical variable). Defaults to red.
 #' @param alpha Opacity of points. Defaults to 0.5.
-#' @param label_sites Whether the sites should be labeled. Defaults to FALSE. Sites are labed by the variable \code{site_name}.
+#' @param label_sites Whether the sites should be labeled. Defaults to FALSE. Sites are labeled by the variable \code{site}.
 #' @param label_axes Whether the axes should be labeled. Defaults to TRUE.
 #' @param scale Whether there should be a scale bar. Defaults to FALSE.
 #' @param scale_position The position of the scale bar, if there is one. One of "bottomright", "bottomleft", "topright", "topleft". Defaults to "bottomright".

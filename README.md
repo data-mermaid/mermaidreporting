@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![CircleCI build
+status](https://circleci.com/gh/data-mermaid/mermaidreporting.svg?style=svg)](https://circleci.com/gh/data-mermaid/mermaidreporting)
 <!-- badges: end -->
 
 The goal of mermaidreporting is to provide utility functions for
@@ -210,7 +212,7 @@ mermaid_map_sites_static(xpdc_sites)
 mermaid_map_sites_interactive(xpdc_sites)
 ```
 
-Note that this is just a screenshot of the interacive plot, but you can
+Note that this is just a screenshot of the interactive plot, but you can
 try it out in an interactive R session by running the above code\!
 
 ### Mapping by a variable

@@ -42,7 +42,7 @@ mermaid_map_sites_static(
 
 \item{alpha}{Opacity of points. Defaults to 0.5.}
 
-\item{label_sites}{Whether the sites should be labeled. Defaults to FALSE. Sites are labed by the variable \code{site_name}.}
+\item{label_sites}{Whether the sites should be labeled. Defaults to FALSE. Sites are labeled by the variable \code{site}.}
 
 \item{label_axes}{Whether the axes should be labeled. Defaults to TRUE.}
 
