@@ -6,7 +6,7 @@
 #' @param compare_var Variable to compare by, e.g. \code{management_rules}
 #' @param compare_var_string String version of \code{compare_var}. Internal use only.
 #' @param y_axis_name Name of the y axis. Internal use only.
-#' @param clean_values Whether to clean the values in \code{group_var} and \code{.compare_var} (with title case as default - see \code{clean_values_case}), in case they are not clean (e.g. contain dashes, underscores, are lowercase, etc). Defaults to TRUE.
+#' @param clean_values Whether to clean the values in \code{group_var} and \code{compare_var} (with title case as default - see \code{clean_values_case}), in case they are not clean (e.g. contain dashes, underscores, are lowercase, etc). Defaults to TRUE.
 #' @param clean_values_case The desired clean values case (default is "title"). For example, if a value is "invertivore-mobile", title case converts it to "Invertivore Mobile" while sentence case converts it to "Invertivore mobile". If you don't want to replace dashes with spaces (e.g. get "Interivore-Mobile", set \code{replace_dashes = FALSE}.
 #' @param replace_dashes Whether to also remove dashes from values when cleaning them. Defaults to TRUE.
 mermaid_boxplot <- function(.data, group_var, group_var_string, compare_var, compare_var_string, y_axis_name, clean_values = TRUE, clean_values_case = c("title", "sentence"), replace_dashes = TRUE) {
@@ -56,7 +56,7 @@ check_df_col <- function(.data, .col_string) {
 
 #' Plot MERMAID fish belt biomass
 #'
-#' Plot box plots of fish belt biomass by a grouping variable \code{.group_var} (e.g. trophic group), separated by a supplied \code{compare_var}.
+#' Plot box plots of fish belt biomass by a grouping variable \code{group_var} (e.g. trophic group), separated by a supplied \code{compare_var} (e.g. reef exposure).
 #'
 #' @inheritParams mermaid_boxplot
 #' @param group_var Variable to group by, e.g. \code{biomass_kgha_by_trophic_group_avg}
@@ -83,7 +83,7 @@ mermaid_plot_fish_belt_biomass <- function(.data, group_var, compare_var, clean_
 
 #' Plot MERMAID Benthic PIT percent cover
 #'
-#' Plot box plots of Benthic PIT percent cover by a grouping variable \code{.group_var} (e.g. benthic category), separated by a supplied \code{compare_var} (e.g. management rules)
+#' Plot box plots of Benthic PIT percent cover by a grouping variable \code{group_var} (e.g. benthic category), separated by a supplied \code{compare_var} (e.g. management rules).
 #'
 #' @inheritParams mermaid_boxplot
 #' @param group_var Variable to group by, e.g. \code{percent_cover_by_benthic_category_avg}

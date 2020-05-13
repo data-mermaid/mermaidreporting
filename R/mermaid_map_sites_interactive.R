@@ -1,10 +1,10 @@
 #' Create an interactive map of MERMAID sample events sites
 #'
-#' Create a static map of sites, zoomed in to the sample events sites. If \code{plot_var} is supplied, then the colour of the site points are based on \code{plot_var}. The map returned is a \code{leaflet} plot, and so \code{leaflet} layers can be built upon it for further customization - please see the examples section.
+#' Create an interactive map of sites, zoomed in to the sample events sites. If \code{plot_var} is supplied, then the colour of the site points are based on \code{plot_var}. The map returned is a \code{leaflet} plot, and so \code{leaflet} layers can be built upon it for further customization - please see the examples section.
 #'
 #' @param .data Data frame with latitude and longitude of sites.
 #' @param plot_var Variable to plot by (optional).
-#' @param basemap Basemap layer. See http://leaflet-extras.github.io/leaflet-providers/preview/ for options. Defaults to "Esri.WorldImagery".
+#' @param basemap Basemap layer. See \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for options. Defaults to "Esri.WorldImagery".
 #' @param jitter Amount of jittering applied to points. Defaults to 0.01. Set to 0 to remove jittering.
 #' @param size Size of points (when \code{plot_var} is not a numeric variable). Defaults to 2.
 #' @param colour Colour of points (when \code{plot_var} is not a character, factor, or logical variable). Defaults to red.

@@ -20,14 +20,14 @@ mermaid_plot_fish_belt_biomass(
 
 \item{compare_var}{Variable to compare by, e.g. \code{management_rules}}
 
-\item{clean_values}{Whether to clean the values in \code{group_var} and \code{.compare_var} (with title case as default - see \code{clean_values_case}), in case they are not clean (e.g. contain dashes, underscores, are lowercase, etc). Defaults to TRUE.}
+\item{clean_values}{Whether to clean the values in \code{group_var} and \code{compare_var} (with title case as default - see \code{clean_values_case}), in case they are not clean (e.g. contain dashes, underscores, are lowercase, etc). Defaults to TRUE.}
 
 \item{clean_values_case}{The desired clean values case (default is "title"). For example, if a value is "invertivore-mobile", title case converts it to "Invertivore Mobile" while sentence case converts it to "Invertivore mobile". If you don't want to replace dashes with spaces (e.g. get "Interivore-Mobile", set \code{replace_dashes = FALSE}.}
 
 \item{replace_dashes}{Whether to also remove dashes from values when cleaning them. Defaults to TRUE.}
 }
 \description{
-Plot box plots of fish belt biomass by a grouping variable \code{.group_var} (e.g. trophic group), separated by a supplied \code{compare_var}.
+Plot box plots of fish belt biomass by a grouping variable \code{group_var} (e.g. trophic group), separated by a supplied \code{compare_var} (e.g. reef exposure).
 }
 \examples{
 \donttest{

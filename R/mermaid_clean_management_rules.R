@@ -1,12 +1,12 @@
 #' Clean MERMAID Management Rules
 #'
-#' Clean up MERMAID management rules. Recodes any (or multiple of, and values are case insensitive) Period Closure, Size Limits, Gear Restrictions, and Species Restrictions to "Partial Restrictions". Other rules are converted to title case (e.g. no take to "No Take") if they aren't already. Empty strings ("") are converted to NAs.
+#' Clean up MERMAID management rules. Recodes any (or multiple of, and values are case insensitive) Period Closure, Size Limits, Gear Restrictions, and Species Restrictions to "Partial Restrictions". Other rules are converted to title case (e.g. no take to "No Take") if they aren't already. Empty strings ("") are converted to \code{NA}s by default, but this option can be changed via \code{missing_value}.
 #'
 #'
 #' @param .data Input data
-#' @param management_rules Column containing management rules. Defaults to \code{management_rules}
-#' @param name Name of the clean column, e.g. "Management Rules". By default just replaces the column in \code{.management_rules}.
-#' @param remove Whether to remove the \code{.management_rules} column (TRUE/FALSE). Only applicable if \code{.name} is set.
+#' @param management_rules Column containing management rules. Defaults to \code{management_rules}.
+#' @param name Name of the clean column, e.g. "Management Rules". By default just replaces the column in \code{management_rules}.
+#' @param remove Whether to remove the \code{management_rules} column (TRUE/FALSE). Only applicable if \code{name} is set - defaults to TRUE.
 #' @param missing_value How to recode missing values. Defaults to a literal NA. Can change to a specific value, e.g. "Not Specified".
 #'
 #' @export

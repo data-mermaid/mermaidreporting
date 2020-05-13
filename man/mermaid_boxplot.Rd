@@ -29,7 +29,7 @@ mermaid_boxplot(
 
 \item{y_axis_name}{Name of the y axis. Internal use only.}
 
-\item{clean_values}{Whether to clean the values in \code{group_var} and \code{.compare_var} (with title case as default - see \code{clean_values_case}), in case they are not clean (e.g. contain dashes, underscores, are lowercase, etc). Defaults to TRUE.}
+\item{clean_values}{Whether to clean the values in \code{group_var} and \code{compare_var} (with title case as default - see \code{clean_values_case}), in case they are not clean (e.g. contain dashes, underscores, are lowercase, etc). Defaults to TRUE.}
 
 \item{clean_values_case}{The desired clean values case (default is "title"). For example, if a value is "invertivore-mobile", title case converts it to "Invertivore Mobile" while sentence case converts it to "Invertivore mobile". If you don't want to replace dashes with spaces (e.g. get "Interivore-Mobile", set \code{replace_dashes = FALSE}.}
 

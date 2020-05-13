@@ -23,7 +23,7 @@ mermaid_map_sites_interactive(
 
 \item{plot_var}{Variable to plot by (optional).}
 
-\item{basemap}{Basemap layer. See http://leaflet-extras.github.io/leaflet-providers/preview/ for options. Defaults to "Esri.WorldImagery".}
+\item{basemap}{Basemap layer. See \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for options. Defaults to "Esri.WorldImagery".}
 
 \item{jitter}{Amount of jittering applied to points. Defaults to 0.01. Set to 0 to remove jittering.}
 
@@ -42,7 +42,7 @@ mermaid_map_sites_interactive(
 \item{legend_position}{Position of the plot legend. One of "bottomright", "bottomleft", "topright", "topleft". Defaults to "bottomright".}
 }
 \description{
-Create a static map of sites, zoomed in to the sample events sites. If \code{plot_var} is supplied, then the colour of the site points are based on \code{plot_var}. The map returned is a \code{leaflet} plot, and so \code{leaflet} layers can be built upon it for further customization - please see the examples section.
+Create an interactive map of sites, zoomed in to the sample events sites. If \code{plot_var} is supplied, then the colour of the site points are based on \code{plot_var}. The map returned is a \code{leaflet} plot, and so \code{leaflet} layers can be built upon it for further customization - please see the examples section.
 }
 \examples{
 \donttest{
