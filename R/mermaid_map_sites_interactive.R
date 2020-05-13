@@ -54,8 +54,8 @@
 #' mapshot(m, file = "sites_by_management_rule.png")
 #' }
 mermaid_map_sites_interactive <- function(.data, plot_var = NULL, basemap = "Esri.WorldImagery", jitter = 0.01, size = 2, colour = "red", alpha = 0.5,
-                                  scale = FALSE, scale_position = c("bottomright", "bottomleft", "topright", "topleft"),
-                                  legend = TRUE, legend_position = c("bottomright", "bottomleft", "topright", "topleft")) {
+                                          scale = FALSE, scale_position = c("bottomright", "bottomleft", "topright", "topleft"),
+                                          legend = TRUE, legend_position = c("bottomright", "bottomleft", "topright", "topleft")) {
 
   # Check inputs
 

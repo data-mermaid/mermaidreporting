@@ -1,5 +1,5 @@
 ## usethis namespace: start
-#' @importFrom tibble tibble
+#' @importFrom dplyr tibble
 ## usethis namespace: end
 NULL
 

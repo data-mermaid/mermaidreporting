@@ -58,7 +58,6 @@ check_bounds <- function(x, type = c("latitude", "longitude")) {
 }
 
 check_bounds_contain_points <- function(points, latitude_bounds, longitude_bounds) {
-
   latitude_range <- range(points[["latitude"]])
   longitude_range <- range(points[["longitude"]])
 

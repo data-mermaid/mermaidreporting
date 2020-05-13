@@ -17,13 +17,10 @@ Imports:
     dplyr,
     janitor,
     magrittr,
-    scales,
-    tibble,
     tidyr (>= 1.0.0),
     rnaturalearth,
     sf,
     ggplot2,
-    snakecase (>= 0.11.0),
     rlang,
     methods,
     leaflet,
@@ -31,9 +28,7 @@ Imports:
     ggspatial,
     stringr,
     rnaturalearthhires,
-    forcats,
     tidyselect,
-    purrr,
     tmaptools,
     mermaidr (>= 0.0.1.9009)
 Encoding: UTF-8

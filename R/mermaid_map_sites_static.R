@@ -69,11 +69,11 @@
 #'   labs(title = "Sites by mean total biomass")
 #' }
 mermaid_map_sites_static <- function(.data, plot_var = NULL, use_fiji_crs = FALSE, bb_ext = 1.1, jitter = 0.01, size = 2, colour = "red", alpha = 0.5,
-                             label_sites = FALSE, label_axes = TRUE,
-                             scale = FALSE, scale_position = c("bottomright", "bottomleft", "topright", "topleft"),
-                             arrow = FALSE, arrow_position = c("bottomright", "bottomleft", "topright", "topleft"),
-                             legend = TRUE, legend_position = c("right", "left", "top", "bottom"),
-                             latitude_bounds = NULL, longitude_bounds = NULL) {
+                                     label_sites = FALSE, label_axes = TRUE,
+                                     scale = FALSE, scale_position = c("bottomright", "bottomleft", "topright", "topleft"),
+                                     arrow = FALSE, arrow_position = c("bottomright", "bottomleft", "topright", "topleft"),
+                                     legend = TRUE, legend_position = c("right", "left", "top", "bottom"),
+                                     latitude_bounds = NULL, longitude_bounds = NULL) {
 
   # Check inputs
 
@@ -101,7 +101,6 @@ mermaid_map_sites_static <- function(.data, plot_var = NULL, use_fiji_crs = FALS
   ## Create bounding box
   if (!bounds_supplied) {
     .data_bb <- tmaptools::bb(data_sf, ext = bb_ext)
-
   }
 
   # Basic plot

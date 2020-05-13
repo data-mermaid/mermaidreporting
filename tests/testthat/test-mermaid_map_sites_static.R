@@ -12,7 +12,6 @@ test_that("mermaid_map_sites_static returns a map containing all the points", {
     mermaid_get_project_data("fishbelt", "sampleevents", limit = 25)
   p <- mermaid_map_sites_static(sample_events)
   expect_equal(nrow(ggplot_build(p)$data[[2]]), 25) # TODO: better way to extract this, so next test passes
-
 })
 
 # test_that("mermaid_map_sites_static map does not contain points if bounds exclude it", {

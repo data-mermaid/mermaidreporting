@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 # mermaidreporting
 
 <!-- badges: start -->
-[![CircleCI build status](https://circleci.com/gh/data-mermaid/mermaidreporting.svg?style=svg)](https://circleci.com/gh/data-mermaid/mermaidreporting)
+[![CircleCI build status](https://circleci.com/gh/data-mermaid/mermaidreporting.svg?branch=development&style=svg)](https://circleci.com/gh/data-mermaid/mermaidreporting)
 <!-- badges: end -->
 
 The goal of mermaidreporting is to provide utility functions for summarising and visualizing MERMAID data.

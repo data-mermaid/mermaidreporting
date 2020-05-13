@@ -1,8 +1,5 @@
 test_that("check_data returns an error when the indicated columns aren't present in data", {
-  df <- tibble::tribble(
-    ~a, ~b,
-    1, 2
-  )
+  df <- dplyr::tibble(a = 1, b = 2)
   expect_error(check_data(df, "c"))
   expect_error(check_data(df, "a", "c"))
   expect_silent(check_data(df, "a", "b"))
@@ -23,11 +20,7 @@ test_that("check_lat_long_bounds works", {
   expect_error(check_lat_long_bounds(c(-100, -75), c(-150, -120)))
   expect_error(check_lat_long_bounds(c(-100, -75), c(-190, 190)))
 
-  df <- tibble::tribble(
-    ~longitude, ~latitude,
-    179, -17.8,
-    178, -14
-  )
+  df <- dplyr::tibble(longitude = c(179, 178), latitude = c(-17.8, -14))
   expect_silent(check_lat_long_bounds(points = df, c(-18, -13), c(175, 180)))
   expect_warning(
     check_lat_long_bounds(
@@ -47,5 +40,4 @@ test_that("recode_position recodes properly", {
   expect_equal(recode_position("bottomleft"), "bl")
   expect_equal(recode_position("topright"), "tr")
   expect_equal(recode_position("topleft"), "tl")
-}
-)
+})

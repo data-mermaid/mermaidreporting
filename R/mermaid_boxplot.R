@@ -10,19 +10,18 @@
 #' @param clean_values_case The desired clean values case (default is "title"). For example, if a value is "invertivore-mobile", title case converts it to "Invertivore Mobile" while sentence case converts it to "Invertivore mobile". If you don't want to replace dashes with spaces (e.g. get "Interivore-Mobile", set \code{replace_dashes = FALSE}.
 #' @param replace_dashes Whether to also remove dashes from values when cleaning them. Defaults to TRUE.
 mermaid_boxplot <- function(.data, group_var, group_var_string, compare_var, compare_var_string, y_axis_name, clean_values = TRUE, clean_values_case = c("title", "sentence"), replace_dashes = TRUE) {
-
   check_df_col(.data, group_var_string)
   check_data(.data, group_var_string, compare_var_string)
 
-      .data <- .data %>%
-      tidyr::unpack(!!group_var, names_sep = "_") %>%
-      tidyr::pivot_longer(
-        cols = dplyr::contains(paste0(group_var_string, "_")),
-        names_to = "group",
-        names_prefix = paste0(group_var_string, "_"),
-        values_to = "value"
-      ) %>%
-      tidyr::drop_na(.data$value)
+  .data <- .data %>%
+    tidyr::unpack(!!group_var, names_sep = "_") %>%
+    tidyr::pivot_longer(
+      cols = dplyr::contains(paste0(group_var_string, "_")),
+      names_to = "group",
+      names_prefix = paste0(group_var_string, "_"),
+      values_to = "value"
+    ) %>%
+    tidyr::drop_na(.data$value)
 
 
   if (clean_values) {
@@ -44,13 +43,13 @@ mermaid_boxplot <- function(.data, group_var, group_var_string, compare_var, com
     ggplot2::geom_boxplot() +
     ggplot2::facet_wrap(dplyr::vars(.data$group), scales = "free_y", ncol = 4) +
     ggplot2::scale_y_continuous(y_axis_name) +
-    ggplot2::scale_x_discrete(snakecase::to_title_case(compare_var_string)) +
+    ggplot2::scale_x_discrete(to_title_case(compare_var_string)) +
     ggplot2::theme_minimal() +
     ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))
 }
 
 check_df_col <- function(.data, .col_string) {
-  if(!inherits(.data[[.col_string]], "data.frame")) {
+  if (!inherits(.data[[.col_string]], "data.frame")) {
     stop("Column `", .col_string, "` must be a data frame column (the raw output from a `mermaid_get_project_endpoint()` function).\nIf you ran `mermaid_clean_columns()` on the data, use the data *before* that cleaning to plot instead.", call. = FALSE)
   }
 }

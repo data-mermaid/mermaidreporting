@@ -83,7 +83,7 @@
 mermaid_clean_columns <- function(.data, append_column_prefix = FALSE, clean_names = TRUE, clean_names_case = c("snake", "sentence", "title", "lower_camel", "upper_camel")) {
   clean_names_case <- match.arg(clean_names_case)
 
-  df_cols <- purrr::map_lgl(.data, inherits, "data.frame")
+  df_cols <- sapply(.data, function(x) inherits(x, "data.frame"))
   df_cols <- names(df_cols[df_cols])
 
   if (!append_column_prefix) {

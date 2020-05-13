@@ -2,8 +2,8 @@ library(proto)
 library(mermaidr)
 
 test_that("mermaid_plot_fish_belt_biomass plot layers and labels are as expected", {
-  events <- tibble::tibble(
-    biomass_kgha_by_trophic_group_avg = tibble::tibble(`piscivore` = c(10, 30), `invertivore-mobile` = c(100, 120)),
+  events <- dplyr::tibble(
+    biomass_kgha_by_trophic_group_avg = dplyr::tibble(`piscivore` = c(10, 30), `invertivore-mobile` = c(100, 120)),
     reef_exposure = c("exposed", "semi-exposed")
   )
   p <- events %>%
@@ -14,8 +14,8 @@ test_that("mermaid_plot_fish_belt_biomass plot layers and labels are as expected
 })
 
 test_that("mermaid_plot_fish_belt_biomass values cleaning works as expected", {
-  events <- tibble::tibble(
-    biomass_kgha_by_trophic_group_avg = tibble::tibble(`piscivore` = c(10, 30), `invertivore-mobile` = c(100, 120)),
+  events <- dplyr::tibble(
+    biomass_kgha_by_trophic_group_avg = dplyr::tibble(`piscivore` = c(10, 30), `invertivore-mobile` = c(100, 120)),
     reef_exposure = c("exposed", "semi-exposed")
   )
 
@@ -46,9 +46,10 @@ test_that("mermaid_plot_fish_belt_biomass values cleaning works as expected", {
 })
 
 test_that("mermaid_plot_fish_belt_biomass errors if group_var is not a df-col", {
-  events_clean <- tibble::tibble(
+  events_clean <- dplyr::tibble(
     biomass_kgha_by_trophic_group_avg = c(10, 100),
     trophic_group = c("piscivore", "invertivore-mobile"),
-    reef_exposure = c("exposed", "semi-exposed"))
+    reef_exposure = c("exposed", "semi-exposed")
+  )
   expect_error(mermaid_plot_fish_belt_biomass(events_clean, biomass_kgha_by_trophic_group_avg, reef_exposure), "the raw output from a ")
 })
