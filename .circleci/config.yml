@@ -6,10 +6,12 @@ jobs:
     environment:
       R_LIBS: ~/R/Library
     steps:
+      - run: apt-get update && apt-get install -y --no-install-recommends libudunits2-dev
       - restore_cache:
           keys:
             - r-pkg-cache-{{ arch }}-{{ .Branch }}
             - r-pkg-cache-{{ arch }}-
+
       - checkout
       - run:
           name: Install package dependencies
