@@ -10,7 +10,13 @@ status](https://circleci.com/gh/data-mermaid/mermaidreporting.svg?style=svg)](ht
 <!-- badges: end -->
 
 The goal of mermaidreporting is to provide utility functions for
-summarising and visualizing MERMAID data.
+cleaning, summarizing, and visualizing [MERMAID
+Collect](https://collect.datamermaid.org/) data. It works alongside the
+[`mermaidr` package](https://github.com/data-mermaid/mermaidr), which
+helps you accesses MERMAID data in R.
+
+If you run into any problems working with this package, please open an
+[issue](https://github.com/data-mermaid/mermaidrreporting/issues).
 
 ## Installation
 
@@ -24,8 +30,8 @@ devtools::install_github("data-mermaid/mermaidreporting@development", upgrade = 
 ## Data
 
 Data is available from the
-[`mermaidr`](https://github.com/data-mermaid/mermaidr/tree/package)
-package. There are details there on authorization and accessing data.
+[`mermaidr`](https://github.com/data-mermaid/mermaidr/) package. There
+are details there on authorization and accessing data.
 
 ## Usage
 
