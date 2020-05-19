@@ -23,8 +23,8 @@ If you run into any problems working with this package, please open an
 You can install the development version of mermaidreporting with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("data-mermaid/mermaidreporting@development", upgrade = "never")
+# install.packages("remotes")
+remotes::install_github("data-mermaid/mermaidreporting", upgrade = "never")
 ```
 
 ## Data
